@@ -5,5 +5,5 @@ export type LoadOptions = {
 }
 
 export interface LoadUsers {
-  load (url: string, options?: LoadOptions): Promise<UserModel[]>
+  load (options?: LoadOptions): Promise<UserModel[]>
 }
