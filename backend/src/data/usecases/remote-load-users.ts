@@ -1,7 +1,7 @@
-import { UserModel } from '../../domain/models/user'
-import { LoadUsers, LoadOptions } from '../../domain/usecases/load-users'
-import { mapUsers } from '../../infra/utils/user-mapper'
-import { HttpClient } from '../protocols/http'
+import { UserModel } from '../../domain/models'
+import { LoadUsers, LoadOptions } from '../../domain/usecases'
+import { mapUsers } from '../../infra/utils'
+import { HttpClient } from '../protocols'
 
 export class RemoteLoadUsers implements LoadUsers {
   constructor (

@@ -1,5 +1,5 @@
-import { ServerError } from '../error/server-error'
-import { ControllerResponse } from '../protocols/controller'
+import { ServerError } from '../errors'
+import { ControllerResponse } from '../protocols'
 
 export const badRequest = (error: Error): ControllerResponse => ({
   statusCode: 400,

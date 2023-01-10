@@ -1,7 +1,7 @@
-import { LoadUsers } from '../../domain/usecases/load-users'
-import { MissingParamError } from '../error/missing-param-error'
-import { badRequest, ok, serverError } from '../helpers/http-responses'
-import { Controller, ControllerRequest, ControllerResponse } from '../protocols/controller'
+import { LoadUsers } from '../../domain/usecases'
+import { MissingParamError } from '../errors'
+import { badRequest, ok, serverError } from '../helpers'
+import { Controller, ControllerRequest, ControllerResponse } from '../protocols'
 
 export class LoadUsersController implements Controller {
   constructor (
