@@ -13,7 +13,7 @@ export class RemoteLoadUsers implements LoadUsers {
       url: this.buildUrl(this.url, options),
       method: 'get'
     })
-    if (statusCode === 200) return body
+    if (statusCode === 200) return body.results
 
     throw new Error()
   }

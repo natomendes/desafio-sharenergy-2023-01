@@ -12,6 +12,6 @@ export const ok = (data: any): ControllerResponse => ({
 })
 
 export const serverError = (): ControllerResponse => ({
-  statusCode: 200,
+  statusCode: 500,
   body: new ServerError()
 })
