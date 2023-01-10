@@ -2,7 +2,7 @@ import { UserModel } from '../../domain/models/user'
 import { LoadUsers, LoadOptions } from '../../domain/usecases/load-users'
 import { HttpClient } from '../protocols/http'
 
-export class RemoteLoadUser implements LoadUsers {
+export class RemoteLoadUsers implements LoadUsers {
   constructor (
     private readonly url: string,
     private readonly httpClient: HttpClient
