@@ -13,7 +13,6 @@ export class LoadUsersController implements Controller {
     try {
       const { page } = request.body
       const users = await this.loadUsers.load({ page })
-      console.log(users)
 
       return ok(users)
     } catch (error) {

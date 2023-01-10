@@ -1,5 +1,6 @@
 import { UserModel } from '../../domain/models/user'
 import { LoadUsers, LoadOptions } from '../../domain/usecases/load-users'
+import { mapUsers } from '../../infra/utils/user-mapper'
 import { HttpClient } from '../protocols/http'
 
 export class RemoteLoadUsers implements LoadUsers {
@@ -13,7 +14,9 @@ export class RemoteLoadUsers implements LoadUsers {
       url: this.buildUrl(this.url, options),
       method: 'get'
     })
-    if (statusCode === 200) return body.results
+    if (statusCode === 200) {
+      return mapUsers(body.results)
+    }
 
     throw new Error()
   }
