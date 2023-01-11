@@ -1,5 +1,5 @@
 import { AddClient } from '../../domain/usecases'
-import { badRequest, noContent, serverError } from '../helpers'
+import { badRequest, forbidden, noContent, serverError } from '../helpers'
 import { Controller, ControllerRequest, ControllerResponse, Validation } from '../protocols'
 
 export class AddClientController implements Controller {
@@ -18,6 +18,9 @@ export class AddClientController implements Controller {
 
       return noContent()
     } catch (error) {
+      if (error.name === 'CpfInUseError') {
+        return forbidden(error)
+      }
       return serverError()
     }
   }

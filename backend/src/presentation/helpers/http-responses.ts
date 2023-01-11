@@ -21,6 +21,11 @@ export const unauthorized = (): ControllerResponse => ({
   body: new UnauthorizedError()
 })
 
+export const forbidden = (error: Error): ControllerResponse => ({
+  statusCode: 403,
+  body: error
+})
+
 export const serverError = (): ControllerResponse => ({
   statusCode: 500,
   body: new ServerError()
