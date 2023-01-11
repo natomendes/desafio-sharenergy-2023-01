@@ -1,4 +1,4 @@
-import { UpdateClientController } from '../../../presentation/controllers/update-client-controller'
+import { UpdateClientController } from '../../../presentation/controllers'
 import { makeDbUpdateClient } from '../usecases'
 import { makeClientValidation } from '../validations'
 
