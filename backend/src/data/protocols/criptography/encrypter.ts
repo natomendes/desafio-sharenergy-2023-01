@@ -1,3 +1,3 @@
 export interface Encrypter {
-  encrypt (username: string): Promise<string>
+  encrypt (username: string, id: string): Promise<string>
 }
