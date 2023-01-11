@@ -3,10 +3,6 @@ export interface ClientModel {
   name: string
   email: string
   phone: string
-  adrress: {
-    street: string
-    city: string
-    country: string
-  }
+  address: string
   cpf: string
 }

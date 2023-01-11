@@ -4,10 +4,10 @@ import { AddClientParams } from '../../../domain/usecases'
 import { MongoHelper } from './mongo-helper'
 
 export class ClientMongoRepository implements AddClientRepo, LoadClientsRepo {
-  async add ({ name, email, adrress, phone, cpf }: AddClientParams): Promise<void> {
+  async add ({ name, email, address, phone, cpf }: AddClientParams): Promise<void> {
     const clientCollection = MongoHelper.getCollection('clients')
 
-    await clientCollection.insertOne({ name, email, adrress, phone, cpf })
+    await clientCollection.insertOne({ name, email, address, phone, cpf })
   }
 
   async loadAll (): Promise<ClientModel[]> {
