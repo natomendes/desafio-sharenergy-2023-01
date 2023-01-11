@@ -18,6 +18,7 @@ export class UpdateClientController implements Controller {
 
       return noContent()
     } catch (error) {
+      console.log(error)
       return serverError()
     }
   }

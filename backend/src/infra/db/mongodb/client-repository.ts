@@ -27,6 +27,6 @@ export class ClientMongoRepository implements AddClientRepo, LoadClientsRepo, Lo
 
   async update ({ name, email, address, phone, cpf }: ClientParams): Promise<void> {
     const clientCollection = MongoHelper.getCollection('clients')
-    await clientCollection.updateOne({ cpf }, { name, email, address, phone })
+    await clientCollection.updateOne({ cpf }, { $set: { cpf, name, email, address, phone } })
   }
 }
