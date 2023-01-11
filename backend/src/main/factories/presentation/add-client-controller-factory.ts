@@ -1,7 +1,7 @@
 import { AddClientController } from '../../../presentation/controllers'
 import { makeDbAddAclient } from '../usecases'
-import { makeAddClientValidation } from '../validations'
+import { makeClientValidation } from '../validations'
 
 export const makeAddClientController = (): AddClientController => {
-  return new AddClientController(makeAddClientValidation(), makeDbAddAclient())
+  return new AddClientController(makeClientValidation(), makeDbAddAclient())
 }
