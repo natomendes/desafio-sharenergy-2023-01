@@ -20,5 +20,9 @@ export const MongoHelper = {
     const { _id, ...rest } = data
 
     return { ...rest, id: _id.toHexString() }
+  },
+
+  mapCollection: <T>(collection: any[]): T[] => {
+    return collection.map(item => MongoHelper.map<T>(item))
   }
 }
