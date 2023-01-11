@@ -1,11 +1,11 @@
-import { AddClientRepo, LoadClientsRepo } from '../../../data/protocols'
+import { AddClientRepo, LoadClientsRepo, UpdateClientRepo } from '../../../data/protocols'
 import { LoadClientByCpfRepo } from '../../../data/protocols/db/load-client-by-cpf-repo'
 import { ClientModel } from '../../../domain/models'
-import { AddClientParams } from '../../../domain/usecases'
+import { ClientParams } from '../../../domain/usecases'
 import { MongoHelper } from './mongo-helper'
 
-export class ClientMongoRepository implements AddClientRepo, LoadClientsRepo, LoadClientByCpfRepo {
-  async add ({ name, email, address, phone, cpf }: AddClientParams): Promise<void> {
+export class ClientMongoRepository implements AddClientRepo, LoadClientsRepo, LoadClientByCpfRepo, UpdateClientRepo {
+  async add ({ name, email, address, phone, cpf }: ClientParams): Promise<void> {
     const clientCollection = MongoHelper.getCollection('clients')
 
     await clientCollection.insertOne({ name, email, address, phone, cpf })
@@ -23,5 +23,10 @@ export class ClientMongoRepository implements AddClientRepo, LoadClientsRepo, Lo
     const client = await clientCollection.findOne({ cpf })
 
     return client && MongoHelper.map<ClientModel>(client)
+  }
+
+  async update ({ name, email, address, phone, cpf }: ClientParams): Promise<void> {
+    const clientCollection = MongoHelper.getCollection('clients')
+    await clientCollection.updateOne({ cpf }, { name, email, address, phone })
   }
 }
