@@ -1,13 +1,21 @@
-import { Login } from '@/presentation/pages'
+import { MainContext } from '@/presentation/contexts'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { setCurrentAccountAdapter } from '../adapters'
+import { makeLogin } from '../factories/pages'
 
 const router = createBrowserRouter([{
-  element: <Login />,
+  element: makeLogin({}),
   path: '/'
 }])
 
 export const Router: React.FC = () => {
+  const state = {
+    saveCurrentAccount: setCurrentAccountAdapter
+  }
+
   return (
-    <RouterProvider router={router} />
+    <MainContext.Provider value={state}>
+      <RouterProvider router={router} />
+    </MainContext.Provider>
   )
 }
