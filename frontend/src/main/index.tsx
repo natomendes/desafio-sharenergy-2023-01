@@ -1,16 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import '@/presentation/styles/global.css'
+import ReactDOMClient from 'react-dom/client'
+import { Router } from '@/presentation/components'
 
-const App: React.FC = () => {
-  return (
-    <div>
-      <p className="bg-black text-primary">Test</p>
-    </div>
-  )
-}
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('main')
-)
+ReactDOMClient
+  .createRoot(document.getElementById('main'))
+  .render(<Router />)
