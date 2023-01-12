@@ -1,8 +1,10 @@
-import { useRef } from 'react'
+import { FormContext } from '@/presentation/contexts'
+import { useContext, useRef } from 'react'
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 export const TextInput: React.FC<Props> = (props: Props) => {
+  const { state, setState } = useContext(FormContext)
   const inputRef = useRef<HTMLInputElement>()
   return (
     <div className={`
@@ -19,6 +21,7 @@ export const TextInput: React.FC<Props> = (props: Props) => {
         placeholder=" "
         readOnly
         onFocus={e => { e.target.readOnly = false }}
+        onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
         className={`
           peer
           px-2
