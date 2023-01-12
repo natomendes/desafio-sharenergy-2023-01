@@ -1,4 +1,5 @@
 export type ControllerRequest = {
+  headers?: any
   body?: any
 }
 
