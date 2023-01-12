@@ -9,6 +9,7 @@ export const SubmitButton: React.FC<Props> = (props: Props) => {
   const { state: { username, password } } = useContext(FormContext)
   return (
     <button
+      type="submit"
       disabled={ !username || !password }
       className={`
         bg-primary text-white font-bold leading-8

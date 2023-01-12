@@ -1,14 +1,41 @@
 import '@/presentation/styles/global.css'
 import logo from '@/assets/images/logo_color.png'
 import { SubmitButton, TextInput } from '@/presentation/components'
-import { useState } from 'react'
-import { FormContext } from '@/presentation/contexts'
+import { useContext, useState } from 'react'
+import { FormContext, MainContext } from '@/presentation/contexts'
+import { Authentication } from '@/domain/usecases'
+import { useNavigate } from 'react-router-dom'
 
-export const Login: React.FC = () => {
+type Props = {
+  authentication: Authentication
+}
+
+export const Login: React.FC<Props> = ({ authentication }: Props) => {
+  const { saveCurrentAccount } = useContext(MainContext)
+  const navigate = useNavigate()
   const [state, setState] = useState({
+    isLoading: false,
+    errorMessage: '',
     username: '',
     password: ''
   })
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    event.preventDefault()
+    try {
+      if (!state.isLoading && state.username && state.password) {
+        setState({ ...state, isLoading: true })
+        const account = await authentication.auth({ username: state.username, password: state.password })
+
+        saveCurrentAccount(account)
+
+        navigate('/', { replace: true })
+      }
+    } catch (error) {
+      setState({ ...state, isLoading: false, errorMessage: error.message })
+    }
+  }
+
   return (
     <div className='h-screen bg-background flex flex-col justify-between'>
       <header className='p-2 bg-white flex justify-center rounded-b-md shadow border-t-4 border-primary'>
@@ -19,7 +46,10 @@ export const Login: React.FC = () => {
       </header>
       <div className='px-4 flex justify-center'>
         <FormContext.Provider value={{ state, setState }}>
-          <form className='p-8 bg-white flex flex-col gap-6 rounded shadow text-center'>
+          <form
+            onSubmit={handleSubmit}
+            className='p-8 bg-white flex flex-col gap-6 rounded shadow text-center'
+          >
             <h2 className="text-primary font-bold text-lg">Login</h2>
 
             <TextInput placeholder='Username' type="text" name="username" />
