@@ -41,7 +41,7 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
 
   return (
     <div className='h-screen bg-background flex flex-col justify-between'>
-      <header className='p-2 bg-white flex justify-center shadow border-t-4 border-primary z-10'>
+      <header className='p-2 bg-white flex justify-center shadow border-t-4 border-primary'>
         <img
           src={logo} alt="Sharenergy logo"
           className='w-1/2 max-w-xs'
