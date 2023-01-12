@@ -1,10 +1,11 @@
-import '@/presentation/styles/global.css'
-import logo from '@/assets/images/logo_color.png'
 import { SubmitButton, TextInput } from '@/presentation/components'
-import { useContext, useState } from 'react'
 import { FormContext, MainContext } from '@/presentation/contexts'
 import { Authentication } from '@/domain/usecases'
+import logo from '@/assets/images/logo_color.png'
+import { Transition } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import '@/presentation/styles/global.css'
 
 type Props = {
   authentication: Authentication
@@ -13,6 +14,7 @@ type Props = {
 export const Login: React.FC<Props> = ({ authentication }: Props) => {
   const { saveCurrentAccount } = useContext(MainContext)
   const navigate = useNavigate()
+  const [showError, setShowError] = useState(false)
   const [state, setState] = useState({
     isLoading: false,
     errorMessage: '',
@@ -33,18 +35,19 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
       }
     } catch (error) {
       setState({ ...state, isLoading: false, errorMessage: error.message })
+      setShowError(true)
     }
   }
 
   return (
     <div className='h-screen bg-background flex flex-col justify-between'>
-      <header className='p-2 bg-white flex justify-center rounded-b-md shadow border-t-4 border-primary'>
+      <header className='p-2 bg-white flex justify-center shadow border-t-4 border-primary z-10'>
         <img
           src={logo} alt="Sharenergy logo"
           className='w-1/2 max-w-xs'
         />
       </header>
-      <div className='px-4 flex justify-center'>
+      <div className='px-4 flex h-full items-center justify-center relative'>
         <FormContext.Provider value={{ state, setState }}>
           <form
             onSubmit={handleSubmit}
@@ -58,6 +61,30 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
 
             <SubmitButton text="Entrar" />
           </form>
+          <div className='absolute top-0 right-0 left-0'>
+            <Transition
+              show={showError}
+              className={`
+              bg-red-400 rounded-b shadow
+              overflow-hidden
+              text-center
+              whitespace-nowrap
+            `}
+              enter="transition-opacity duration-500"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              afterEnter={() => {
+                setTimeout(() => {
+                  setShowError(false)
+                }, 2500)
+              }}
+              leave="transition-opacity duration-500"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <p className="text-gray-800 text-[14px] leading-6">{ state.errorMessage }</p>
+            </Transition>
+          </div>
         </FormContext.Provider>
       </div>
       <footer className='p-1 bg-primary shadow flex justify-center'>
