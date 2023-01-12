@@ -1,5 +1,6 @@
 import '@/presentation/styles/global.css'
 import logo from '@/assets/images/logo_color.png'
+import { TextInput } from '@/presentation/components'
 
 export const Login: React.FC = () => {
   return (
@@ -11,8 +12,9 @@ export const Login: React.FC = () => {
         />
       </header>
       <div className='px-4'>
-        <form className='p-4 bg-white flex flex-col gap-4 rounded shadow'>
-
+        <form className='p-8 bg-white flex flex-col gap-6 rounded shadow'>
+          <TextInput placeholder='Username' type="text" />
+          <TextInput placeholder='Senha' type="password" />
         </form>
       </div>
       <footer className='p-1 bg-white shadow-sm flex justify-center'>
