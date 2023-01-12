@@ -3,7 +3,7 @@ version: '3'
 services:
   database:
     image: mongo:latest
-    container_name: mongodb-sharenergy
+    container_name: database-sharenergy
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
@@ -14,3 +14,16 @@ services:
       - ./mongorestore.sh:/docker-entrypoint-initdb.d/mongorestore.sh
       - ./db-dump:/db-dump
     
+  backend:
+    image: node:18
+    container_name: backend-sharenergy
+    restart: always
+    working_dir: /api
+    command: bash -c "npm install --omit=dev && npm start"
+    volumes:
+      - ./backend/dist/:/api/dist/
+      - ./backend/package.json:/api/package.json
+    ports:
+      - "5050:5050"
+    environment:
+      - MONGO_URI=mongodb://root:123456@database:27017/sharenergy-db?authSource=admin

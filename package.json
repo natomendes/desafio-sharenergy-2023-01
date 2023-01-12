@@ -1,0 +1,21 @@
+{
+  "name": "desafio-sharenergy-2023-01",
+  "version": "1.0.0",
+  "description": "Repositório destinado aos interessados em participar do processo seletivo da SHARENERGY 2023/01. As vagas são voltadas para desenvolvimento de aplicações Web e Mobile.",
+  "main": "index.js",
+  "scripts": {
+    "preup": "cd backend && npm run build",
+    "up": "docker compose up -d"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natomendes/desafio-sharenergy-2023-01.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natomendes/desafio-sharenergy-2023-01/issues"
+  },
+  "homepage": "https://github.com/natomendes/desafio-sharenergy-2023-01#readme"
+}
