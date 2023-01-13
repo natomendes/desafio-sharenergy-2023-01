@@ -3,6 +3,7 @@ import { createContext } from 'react'
 
 type Props = {
   saveCurrentAccount?: (account: AccountModel) => void
+  loadCurrentAccount?: () => AccountModel
 }
 
 export const MainContext = createContext<Props>(null)
