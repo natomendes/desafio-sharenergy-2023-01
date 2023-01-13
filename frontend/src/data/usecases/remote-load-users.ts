@@ -12,7 +12,7 @@ export class RemoteLoadUsers implements LoadUsers {
   async load (page: string, accessToken: string): Promise<UserModel[]> {
     const httpResponse = await this.httpClient.request({
       url: this.url,
-      method: 'get',
+      method: 'post',
       headers: { 'x-access-token': accessToken },
       body: { page }
     })

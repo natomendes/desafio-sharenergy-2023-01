@@ -2,6 +2,7 @@ import { MainContext } from '@/presentation/contexts'
 import { Users } from '@/presentation/pages'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '../adapters'
+import { loadUsersAdapter } from '../adapters/load-users-adapter'
 import { makeLogin } from '../factories/pages'
 import { PrivateRoute } from '../proxies/private-route'
 
@@ -13,7 +14,8 @@ const router = createBrowserRouter([{
   path: '/',
   children: [{
     path: '/',
-    element: <Users />
+    element: <Users />,
+    loader: loadUsersAdapter
   }]
 }])
 

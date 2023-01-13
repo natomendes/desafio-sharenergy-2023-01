@@ -1,7 +1,10 @@
 import logo from '@/assets/images/logo_color.png'
-import { SearchInput } from '@/presentation/components'
+import { UserModel } from '@/domain/models'
+import { SearchInput, UserItem } from '@/presentation/components'
+import { useLoaderData } from 'react-router-dom'
 
 export const Users: React.FC = () => {
+  const users = useLoaderData() as UserModel[] | null
   return (
     <div className={`
       bg-gradient-to-tr from-primary to-green-600/60
@@ -26,7 +29,9 @@ export const Users: React.FC = () => {
         <ul className={`
           flex flex-col w-full
         `}>
-          {/* <UserItem /> */}
+          {
+            users?.map((user: UserModel) => <UserItem key={user.username} {...user } />)
+          }
         </ul>
       </main>
     </div>
