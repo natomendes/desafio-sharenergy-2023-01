@@ -52,16 +52,20 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
       </header>
       <main className={`
         p-2 flex flex-col items-center gap-2 flex-grow
+        lg:p-3 lg:max-w-5xl
+        mx-auto
       `}>
         <div className={`
-          flex justify-between gap-1
+          flex justify-between gap-1 w-full
         `}>
           <ChangePage name="prev" prev={true} disabled={page === 1} onClick={getPage} />
           <SearchInput />
           <ChangePage name="next" prev={false} onClick={getPage} />
         </div>
         <ul className={`
-          flex flex-col w-full gap-2
+          flex flex-col w-full gap-2 sm:max-w-md
+          lg:flex-row lg:flex-wrap lg:max-w-full lg:gap-10
+          lg:flex-grow lg:items-center lg:p-10
         `}>
           {
             users?.map((user: UserModel) => <UserItem key={user.username} {...user } />)
