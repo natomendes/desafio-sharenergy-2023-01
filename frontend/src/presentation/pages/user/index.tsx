@@ -21,7 +21,8 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
   const { page, users } = pageData
 
   const getPage = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
-    const buttonEl = event.target as HTMLButtonElement
+    const buttonEl = event.currentTarget as HTMLButtonElement
+    console.log(buttonEl)
     const pageToGo = buttonEl.name === 'prev' ? page - 1 : page + 1
     if (pageToGo > 0) {
       const account = loadCurrentAccount()

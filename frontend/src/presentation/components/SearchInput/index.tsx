@@ -7,7 +7,7 @@ export const SearchInput: React.FC = () => {
     <div
       className={`
       text-slate-500
-      flex w-1/2
+      flex w-1/2 max-w-lg
       lg:w-1/4
       border border-slate-500 rounded-full py-1 px-1
       focus-within:w-full focus-within:px-2
