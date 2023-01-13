@@ -10,7 +10,9 @@ export const SearchInput: React.FC = () => {
       flex w-1/2
       border border-slate-500 rounded-full py-1 px-1
       focus-within:w-full focus-within:px-2
-      transition-all ease-in-out duration-500
+      transition-all ease-in-out duration-1000
+      [&:has(input:not(:placeholder-shown))]:w-full
+      [&:has(input:not(:placeholder-shown))]:px-2
     `}>
       <svg
         width="24"
@@ -30,7 +32,7 @@ export const SearchInput: React.FC = () => {
         ref={inputRef}
         type="text"
         name="search"
-        placeholder="Busca Rapida"
+        placeholder="Busca Nome"
         autoComplete="off"
         className={`
           bg-transparent

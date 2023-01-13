@@ -1,10 +1,38 @@
 import logo from '@/assets/images/logo_color.png'
 import { UserModel } from '@/domain/models'
-import { SearchInput, UserItem } from '@/presentation/components'
+import { LoadUsers } from '@/domain/usecases/load-users'
+import { ChangePage, SearchInput, UserItem } from '@/presentation/components'
+import { MainContext } from '@/presentation/contexts'
+import { useContext, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 
-export const Users: React.FC = () => {
-  const users = useLoaderData() as UserModel[] | null
+type Props = {
+  loadUsers: LoadUsers
+}
+
+export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
+  const data = useLoaderData() as UserModel[] | null
+  const { loadCurrentAccount } = useContext(MainContext)
+  const [pageData, setPageData] = useState({
+    page: 1,
+    users: data
+  })
+
+  const { page, users } = pageData
+
+  const getPage = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+    const buttonEl = event.target as HTMLButtonElement
+    const pageToGo = buttonEl.name === 'prev' ? page - 1 : page + 1
+    if (pageToGo > 0) {
+      const account = loadCurrentAccount()
+      const newUsers = await loadUsers.load(`${pageToGo}`, account.accessToken)
+      setPageData({
+        page: pageToGo,
+        users: newUsers
+      })
+    }
+  }
+
   return (
     <div className={`
       bg-gradient-to-tr from-primary to-green-600/60
@@ -25,9 +53,15 @@ export const Users: React.FC = () => {
       <main className={`
         p-2 flex flex-col items-center gap-2 flex-grow
       `}>
-        <SearchInput />
+        <div className={`
+          flex justify-between gap-1
+        `}>
+          <ChangePage name="prev" prev={true} disabled={page === 1} onClick={getPage} />
+          <SearchInput />
+          <ChangePage name="next" prev={false} onClick={getPage} />
+        </div>
         <ul className={`
-          flex flex-col w-full
+          flex flex-col w-full gap-2
         `}>
           {
             users?.map((user: UserModel) => <UserItem key={user.username} {...user } />)
