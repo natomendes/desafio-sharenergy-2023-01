@@ -40,15 +40,17 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
     `}>
       <header className={`
         bg-gradient-to-tr from-gray-200 to-white p-3 shadow
-        flex justify-end
+        flex justify-end max-h-12
       `}>
-          <img
-            src={logo}
-            alt="Sharenergy logo"
-            className={`
-            w-1/2
-          `}
-          />
+          <div className="max-w-5xl mx-auto w-full">
+            <img
+              src={logo}
+              alt="Sharenergy logo"
+              className={`
+              w-1/2 max-w-[200px]
+            `}
+            />
+          </div>
       </header>
       <main className={`
         p-2 flex flex-col items-center gap-2 flex-grow
