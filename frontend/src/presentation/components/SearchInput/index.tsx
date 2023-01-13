@@ -1,6 +1,11 @@
 import { useRef } from 'react'
 
-export const SearchInput: React.FC = () => {
+type Props = {
+  setSearchParam: React.Dispatch<React.SetStateAction<string>>
+  searchParam: string
+}
+
+export const SearchInput: React.FC<Props> = ({ searchParam, setSearchParam }: Props) => {
   const inputRef = useRef<HTMLInputElement>()
 
   return (
@@ -35,6 +40,8 @@ export const SearchInput: React.FC = () => {
         name="search"
         placeholder="Busca Nome"
         autoComplete="off"
+        onChange={e => { setSearchParam(e.target.value) }}
+        value={searchParam}
         className={`
           bg-transparent
           text-slate-500

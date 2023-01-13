@@ -13,12 +13,19 @@ type Props = {
 export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
   const data = useLoaderData() as UserModel[] | null
   const { loadCurrentAccount } = useContext(MainContext)
+  const [searchParam, setSearchParam] = useState('')
   const [pageData, setPageData] = useState({
     page: 1,
     users: data
   })
 
   const { page, users } = pageData
+
+  const filterUsers = (users: UserModel[]): UserModel[] => {
+    if (!searchParam) return users
+
+    return users.filter(({ name }: UserModel) => name.toLowerCase().startsWith(searchParam.toLowerCase()))
+  }
 
   const getPage = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
     const buttonEl = event.currentTarget as HTMLButtonElement
@@ -31,6 +38,7 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
         page: pageToGo,
         users: newUsers
       })
+      setSearchParam('')
     }
   }
 
@@ -62,16 +70,16 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
           flex justify-between gap-1 w-full
         `}>
           <ChangePage name="prev" prev={true} disabled={page === 1} onClick={getPage} />
-          <SearchInput />
+          <SearchInput searchParam={searchParam} setSearchParam={setSearchParam } />
           <ChangePage name="next" prev={false} onClick={getPage} />
         </div>
         <ul className={`
           flex flex-col w-full gap-2 sm:max-w-md
-          lg:flex-row lg:flex-wrap lg:max-w-full lg:gap-10
-          lg:flex-grow lg:items-center lg:p-10
+          lg:flex-row lg:flex-wrap lg:max-w-full lg:gap-6
+          lg:content-start lg:p-6
         `}>
           {
-            users?.map((user: UserModel) => <UserItem key={user.username} {...user } />)
+            filterUsers(users)?.map((user: UserModel) => <UserItem key={user.username} {...user } />)
           }
         </ul>
       </main>
