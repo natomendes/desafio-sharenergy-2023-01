@@ -1,5 +1,5 @@
 import { MainContext, MainContextProps } from '@/presentation/contexts'
-import { HttpCats } from '@/presentation/pages'
+import { HttpCats, RandomDog } from '@/presentation/pages'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { clearCurrentAccountAdapter, getCurrentAccountAdapter, setCurrentAccountAdapter } from '../adapters'
 import { loadUsersAdapter } from '../adapters/load-users-adapter'
@@ -23,6 +23,13 @@ const router = createBrowserRouter([{
   children: [{
     path: '/http-cats',
     element: <HttpCats />
+  }]
+}, {
+  element: <PrivateRoute />,
+  path: '/random-dog',
+  children: [{
+    path: '/random-dog',
+    element: <RandomDog />
   }]
 }])
 
