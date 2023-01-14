@@ -24,7 +24,7 @@ export const HttpCats: React.FC = () => {
   return (
     <div className={`
       bg-gradient-to-tr from-primary to-green-600/60
-      min-h-screen flex flex-col
+      min-h-screen flex flex-col      
     `}>
       <Header />
       <main className={`
@@ -132,15 +132,15 @@ export const HttpCats: React.FC = () => {
                   <div className="absolute top-5 right-7">
                     <button
                       type="button"
-                      className="flex justify-center text-sm font-medium text-primary hover:text-vividBurgundy focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      className="flex justify-center text-xs font-medium text-primary hover:text-vividBurgundy focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                       onClick={toggleModal}
                     >
-                      X
+                      fechar
                     </button>
                   </div>
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg text-center font-medium leading-6 text-primary"
                   >
                     Http Status Code
                   </Dialog.Title>
