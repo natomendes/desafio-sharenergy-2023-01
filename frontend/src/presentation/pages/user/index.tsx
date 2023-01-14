@@ -50,7 +50,7 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
       <main className={`
         p-2 flex flex-col items-center gap-2 flex-grow
         lg:p-3 lg:max-w-5xl
-        mx-auto
+        mx-auto w-full
       `}>
         <div className={`
           flex justify-between gap-1 w-full
