@@ -1,4 +1,5 @@
 import { MainContext, MainContextProps } from '@/presentation/contexts'
+import { HttpCats } from '@/presentation/pages'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { clearCurrentAccountAdapter, getCurrentAccountAdapter, setCurrentAccountAdapter } from '../adapters'
 import { loadUsersAdapter } from '../adapters/load-users-adapter'
@@ -15,6 +16,13 @@ const router = createBrowserRouter([{
     path: '/',
     element: makeUser({}),
     loader: loadUsersAdapter
+  }]
+}, {
+  element: <PrivateRoute />,
+  path: '/http-cats',
+  children: [{
+    path: '/http-cats',
+    element: <HttpCats />
   }]
 }])
 
