@@ -24,10 +24,11 @@ export const TextInput: React.FC<Props> = (props: Props) => {
         onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
         className={`
           peer
-          px-2
+          px-2 bg-lightGray
           leading-7
           focus:outline-none
           [&:not(:placeholder-shown)]:border-primary
+          auto-complete-gray
         `}
       />
       <label className={`

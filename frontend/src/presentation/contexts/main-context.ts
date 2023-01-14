@@ -1,9 +1,10 @@
 import { AccountModel } from '@/domain/models'
 import { createContext } from 'react'
 
-type Props = {
+export type MainContextProps = {
   saveCurrentAccount?: (account: AccountModel) => void
   loadCurrentAccount?: () => AccountModel
+  clearCurrentAccount?: () => void
 }
 
-export const MainContext = createContext<Props>(null)
+export const MainContext = createContext<MainContextProps>(null)

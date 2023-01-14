@@ -1,7 +1,6 @@
-import { SubmitButton, TextInput } from '@/presentation/components'
+import { Header, SubmitButton, TextInput } from '@/presentation/components'
 import { FormContext, MainContext } from '@/presentation/contexts'
 import { Authentication } from '@/domain/usecases'
-import logo from '@/assets/images/logo_color.png'
 import { Transition } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
@@ -40,18 +39,13 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
   }
 
   return (
-    <div className='h-screen bg-background flex flex-col justify-between'>
-      <header className='p-2 bg-white flex justify-center shadow border-t-4 border-primary'>
-        <img
-          src={logo} alt="Sharenergy logo"
-          className='w-1/2 max-w-xs'
-        />
-      </header>
+    <div className='h-screen bg-gradient-to-tr from-primary to-green-600/60 flex flex-col justify-between'>
+      <Header />
       <div className='px-4 flex h-full items-center justify-center relative'>
         <FormContext.Provider value={{ state, setState }}>
           <form
             onSubmit={handleSubmit}
-            className='p-8 bg-white flex flex-col gap-6 rounded shadow text-center'
+            className='p-8 bg-lightGray flex flex-col gap-6 rounded shadow text-center'
           >
             <h2 className="text-primary font-bold text-lg">Login</h2>
 

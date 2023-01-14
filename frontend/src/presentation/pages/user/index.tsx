@@ -1,7 +1,6 @@
-import logo from '@/assets/images/logo_color.png'
 import { UserModel } from '@/domain/models'
 import { LoadUsers } from '@/domain/usecases/load-users'
-import { ChangePage, SearchInput, UserItem } from '@/presentation/components'
+import { ChangePage, Header, SearchInput, UserItem } from '@/presentation/components'
 import { MainContext } from '@/presentation/contexts'
 import { useContext, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
@@ -47,20 +46,7 @@ export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
       bg-gradient-to-tr from-primary to-green-600/60
       min-h-screen flex flex-col
     `}>
-      <header className={`
-        bg-gradient-to-tr from-gray-200 to-white p-3 shadow
-        flex justify-end max-h-12
-      `}>
-          <div className="max-w-5xl mx-auto w-full">
-            <img
-              src={logo}
-              alt="Sharenergy logo"
-              className={`
-              w-1/2 max-w-[200px]
-            `}
-            />
-          </div>
-      </header>
+      <Header />
       <main className={`
         p-2 flex flex-col items-center gap-2 flex-grow
         lg:p-3 lg:max-w-5xl
