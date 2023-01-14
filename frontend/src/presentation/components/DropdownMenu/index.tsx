@@ -64,8 +64,6 @@ export const DropdownMenu: React.FC = () => {
           Sair
         </button>
       </div>
-
-      <img src="/solutions.jpg" alt="" />
     </Popover.Panel>
   </Popover>
   )
