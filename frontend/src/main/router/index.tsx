@@ -1,6 +1,6 @@
-import { MainContext } from '@/presentation/contexts'
+import { MainContext, MainContextProps } from '@/presentation/contexts'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { getCurrentAccountAdapter, setCurrentAccountAdapter } from '../adapters'
+import { clearCurrentAccountAdapter, getCurrentAccountAdapter, setCurrentAccountAdapter } from '../adapters'
 import { loadUsersAdapter } from '../adapters/load-users-adapter'
 import { makeLogin, makeUser } from '../factories/pages'
 import { PrivateRoute } from '../proxies/private-route'
@@ -19,9 +19,10 @@ const router = createBrowserRouter([{
 }])
 
 export const Router: React.FC = () => {
-  const state = {
+  const state: MainContextProps = {
     saveCurrentAccount: setCurrentAccountAdapter,
-    loadCurrentAccount: getCurrentAccountAdapter
+    loadCurrentAccount: getCurrentAccountAdapter,
+    clearCurrentAccount: clearCurrentAccountAdapter
   }
 
   return (
