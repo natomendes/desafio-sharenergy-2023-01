@@ -9,6 +9,8 @@ const classNames = (...classes: string[]): string => {
 
 export const HttpCats: React.FC = () => {
   const [statusCode] = useState(httpStatus)
+  const [imgSrc, setImgSrc] = useState('')
+
   return (
     <div className={`
       bg-gradient-to-tr from-primary to-green-600/60
@@ -56,14 +58,20 @@ export const HttpCats: React.FC = () => {
                     <li
                       key={status}
                       className={classNames(
-                        'relative rounded-md p-2 hover:bg-primary/20 basis-5/12 flex-grow',
+                        'relative rounded-md hover:bg-primary/20 basis-5/12 flex-grow',
                         'flex flex-col items-center text-center justify-start',
                         'border border-primary/20',
                         'md:basis-[30%] md:max-w-[243px]',
                         'lg:basis-[20%]'
                       )}
                     >
-                      <button name={status}>
+                      <button
+                        name={status}
+                        onClick={e => { setImgSrc(`https://http.cat/${e.currentTarget.name}`) }}
+                        className={classNames(
+                          'w-full h-full p-2'
+                        )}
+                      >
                         <h3 className="text-sm font-medium leading-5 text-vividBurgundy">
                           {status}
                         </h3>
@@ -76,6 +84,7 @@ export const HttpCats: React.FC = () => {
             ))}
           </Tab.Panels>
         </Tab.Group>
+        { imgSrc && <img src={imgSrc} alt="" />}
       </main>
     </div>
   )
