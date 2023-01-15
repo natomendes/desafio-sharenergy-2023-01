@@ -9,7 +9,7 @@ type Props = {
   loadUsers: LoadUsers
 }
 
-export const Users: React.FC<Props> = ({ loadUsers }: Props) => {
+export const User: React.FC<Props> = ({ loadUsers }: Props) => {
   const data = useLoaderData() as UserModel[] | null
   const { loadCurrentAccount } = useContext(MainContext)
   const [searchParam, setSearchParam] = useState('')

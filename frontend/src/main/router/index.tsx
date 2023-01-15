@@ -1,5 +1,5 @@
 import { MainContext, MainContextProps } from '@/presentation/contexts'
-import { HttpCats } from '@/presentation/pages'
+import { Client, HttpCats } from '@/presentation/pages'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { clearCurrentAccountAdapter, getCurrentAccountAdapter, randomDogLoader, setCurrentAccountAdapter } from '../adapters'
 import { loadUsersAdapter } from '../adapters/load-users-adapter'
@@ -31,6 +31,13 @@ const router = createBrowserRouter([{
     path: '/random-dog',
     element: makeRandomDog({}),
     loader: randomDogLoader
+  }]
+}, {
+  element: <PrivateRoute />,
+  path: '/clients',
+  children: [{
+    path: '/clients',
+    element: <Client />
   }]
 }])
 
