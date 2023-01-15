@@ -1,8 +1,7 @@
 import { UserModel } from '@/domain/models'
 import { LoadUsers } from '@/domain/usecases/load-users'
 import { ChangePage, Header, SearchInput, UserItem } from '@/presentation/components'
-import { MainContext } from '@/presentation/contexts'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 
 type Props = {
@@ -11,7 +10,6 @@ type Props = {
 
 export const User: React.FC<Props> = ({ loadUsers }: Props) => {
   const data = useLoaderData() as UserModel[] | null
-  const { loadCurrentAccount } = useContext(MainContext)
   const [searchParam, setSearchParam] = useState('')
   const [pageData, setPageData] = useState({
     page: 1,
@@ -30,8 +28,7 @@ export const User: React.FC<Props> = ({ loadUsers }: Props) => {
     const buttonEl = event.currentTarget as HTMLButtonElement
     const pageToGo = buttonEl.name === 'prev' ? page - 1 : page + 1
     if (pageToGo > 0) {
-      const account = loadCurrentAccount()
-      const newUsers = await loadUsers.load(`${pageToGo}`, account.accessToken)
+      const newUsers = await loadUsers.load(`${pageToGo}`)
       setPageData({
         page: pageToGo,
         users: newUsers

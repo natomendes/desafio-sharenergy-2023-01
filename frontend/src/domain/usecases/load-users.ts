@@ -1,5 +1,5 @@
 import { UserModel } from '../models'
 
 export interface LoadUsers {
-  load(page: string, accessToken: string): Promise<UserModel[]>
+  load(page: string): Promise<UserModel[]>
 }
