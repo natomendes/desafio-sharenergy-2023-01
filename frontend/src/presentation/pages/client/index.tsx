@@ -1,11 +1,16 @@
 import { ClientModel } from '@/domain/models'
+import { DeleteClient } from '@/domain/usecases'
 import { ClientItem, Header } from '@/presentation/components'
 import { useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 
-export const Client: React.FC = () => {
+type Props = {
+  deleteClient: DeleteClient
+}
+
+export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
   const loadedClients = useLoaderData() as ClientModel[]
-  const [clients] = useState(loadedClients)
+  const [clients, setClients] = useState(loadedClients)
   return (
     <div className={`
       bg-gradient-to-tr from-primary to-green-600/60
@@ -18,7 +23,7 @@ export const Client: React.FC = () => {
         mx-auto w-full
       `}>
         {
-          clients && (
+          clients.length !== 0 && (
           <div className="rounded-xl space-y-1 bg-primary/40 p-1 w-full shadow">
             <h2 className={`
               bg-white/25 w-full rounded-lg py-2.5
@@ -49,7 +54,12 @@ export const Client: React.FC = () => {
               <tbody className='text-sm'>
                 {
                   clients.map((client) => (
-                    <ClientItem key={client.id} {...client} />
+                    <ClientItem
+                      {...client}
+                      key={client.id}
+                      deleteClient={deleteClient}
+                      setClients={setClients}
+                    />
                   ))
                 }
               </tbody>

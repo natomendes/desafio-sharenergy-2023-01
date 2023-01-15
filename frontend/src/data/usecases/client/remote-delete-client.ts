@@ -16,7 +16,7 @@ export class RemoteDeleteClient implements DeleteClient {
     })
 
     switch (httpReponse.statusCode) {
-      case HttpStatusCode.noContent:
+      case HttpStatusCode.noContent: break
       case HttpStatusCode.forbidden: throw new AccessDeniedError()
       default: throw new UnexpectedError()
     }
