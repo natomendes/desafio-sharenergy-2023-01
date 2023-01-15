@@ -9,7 +9,7 @@ export class LoadClientsController implements Controller {
     try {
       const clients = await this.loadClients.load()
 
-      return ok({ clients })
+      return ok(clients)
     } catch (error) {
       return serverError()
     }
