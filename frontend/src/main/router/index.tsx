@@ -1,7 +1,7 @@
 import { MainContext, MainContextProps } from '@/presentation/contexts'
 import { Client, HttpCats } from '@/presentation/pages'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { clearCurrentAccountAdapter, getCurrentAccountAdapter, randomDogLoader, setCurrentAccountAdapter } from '../adapters'
+import { clearCurrentAccountAdapter, getCurrentAccountAdapter, loadClientsAdapter, randomDogLoader, setCurrentAccountAdapter } from '../adapters'
 import { loadUsersAdapter } from '../adapters/load-users-adapter'
 import { makeLogin, makeRandomDog, makeUser } from '../factories/pages'
 import { PrivateRoute } from '../proxies/private-route'
@@ -37,7 +37,8 @@ const router = createBrowserRouter([{
   path: '/clients',
   children: [{
     path: '/clients',
-    element: <Client />
+    element: <Client />,
+    loader: loadClientsAdapter
   }]
 }])
 
