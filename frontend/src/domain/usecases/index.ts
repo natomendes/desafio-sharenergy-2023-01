@@ -1,3 +1,5 @@
 export * from './authentication'
 export * from './get-random-dog'
 export * from './load-users'
+export * from './client/load-clients'
+export * from './client/delete-client'
