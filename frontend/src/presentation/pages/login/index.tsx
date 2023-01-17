@@ -21,6 +21,8 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
     password: ''
   })
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
@@ -49,9 +51,9 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
           >
             <h2 className="text-primary font-bold text-lg">Login</h2>
 
-            <TextInput placeholder='Username' type="text" name="username" />
+            <TextInput placeholder='Username' type="text" name="username" className="auto-complete-gray" onChange={handleChange} />
 
-            <TextInput placeholder='Senha' type="password" name="password"/>
+            <TextInput placeholder='Senha' type="password" name="password" className="auto-complete-gray" onChange={handleChange}/>
 
             <SubmitButton text="Entrar" />
           </form>
