@@ -25,7 +25,7 @@ export const TextInput: React.FC<Props> = (props: Props) => {
         onFocus={e => { e.target.readOnly = false }}
         title={errorState[props.name] || ''}
         className={[props.className, classNames(
-          'peer px-2 bg-lightGray leading-7 focus:outline-none'
+          'peer w-full px-2 bg-lightGray leading-7 focus:outline-none'
         )].join(' ')}
       />
       <label className={classNames(

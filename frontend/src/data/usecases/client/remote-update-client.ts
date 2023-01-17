@@ -3,7 +3,7 @@ import { UnexpectedError } from '@/domain/errors'
 import { ClientModel } from '@/domain/models'
 import { UpdateClient } from '@/domain/usecases'
 
-export class RemoteAddClient implements UpdateClient {
+export class RemoteUpdateClient implements UpdateClient {
   constructor (
     private readonly url: string,
     private readonly httpClient: HttpClient
