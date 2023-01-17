@@ -1,5 +1,5 @@
 import { UpdateClient } from '../../domain/usecases'
-import { badRequest, noContent, serverError } from '../helpers'
+import { badRequest, ok, serverError } from '../helpers'
 import { Controller, ControllerRequest, ControllerResponse, Validation } from '../protocols'
 
 export class UpdateClientController implements Controller {
@@ -13,10 +13,10 @@ export class UpdateClientController implements Controller {
       const error = this.validation.validate(request.body)
       if (error) return badRequest(error)
 
-      const { name, email, phone, address, cpf } = request.body
-      await this.updateClient.update({ name, email, phone, address, cpf })
+      const { id, name, email, phone, address, cpf } = request.body
+      const updatedClients = await this.updateClient.update({ id, name, email, phone, address, cpf })
 
-      return noContent()
+      return ok(updatedClients)
     } catch (error) {
       console.log(error)
       return serverError()

@@ -1,5 +1,5 @@
-import { ClientParams } from './add-client'
+import { ClientModel } from '../models'
 
 export interface UpdateClient {
-  update (updateClientParams: ClientParams): Promise<void>
+  update (updateClientParams: ClientModel): Promise<ClientModel[]>
 }

@@ -26,9 +26,9 @@ AddClientRepo, LoadClientsRepo, LoadClientByCpfRepo, UpdateClientRepo, DeleteCli
     return client && MongoHelper.map<ClientModel>(client)
   }
 
-  async update ({ name, email, address, phone, cpf }: ClientParams): Promise<void> {
+  async update ({ id, name, email, address, phone, cpf }: ClientModel): Promise<void> {
     const clientCollection = MongoHelper.getCollection('clients')
-    await clientCollection.updateOne({ cpf }, { $set: { cpf, name, email, address, phone } })
+    await clientCollection.updateOne({ _id: new ObjectId(id) }, { $set: { cpf, name, email, address, phone } })
   }
 
   async delete (clientId: string): Promise<void> {
