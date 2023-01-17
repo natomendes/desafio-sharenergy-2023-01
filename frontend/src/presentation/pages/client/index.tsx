@@ -1,5 +1,5 @@
 import { ClientModel } from '@/domain/models'
-import { AddClient, DeleteClient } from '@/domain/usecases'
+import { AddClient, DeleteClient, UpdateClient } from '@/domain/usecases'
 import { ClientItem, Header, SubmitButton, TextInput } from '@/presentation/components'
 import { AddIcon } from '@/presentation/components/Icons'
 import { Dialog, Transition } from '@headlessui/react'
@@ -10,19 +10,18 @@ import { Validation } from '@/presentation/protocols'
 import { classNames } from '@/presentation/utils'
 import { addClientMasksMapper, cpfMask, phoneMask, removeMask } from '@/presentation/utils/input-masks'
 
-type ModalDataModel = Omit<ClientModel, 'id'> & { type: 'add' | 'edit' }
-
 type Props = {
   addClient: AddClient
+  updateClient: UpdateClient
   deleteClient: DeleteClient
   validation: Validation
 }
 
-export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }: Props) => {
+export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient, validation }: Props) => {
   const loadedClients = useLoaderData() as ClientModel[]
   const [clients, setClients] = useState(addClientMasksMapper(loadedClients))
   const [isOpen, setIsOpen] = useState(false)
-  const [state, setState] = useState<ModalDataModel>({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
+  const [state, setState] = useState<ClientModel>({ id: '', name: '', cpf: '', email: '', phone: '', address: '' })
   const [errorState, setErrorState] = useState({
     name: '',
     cpf: '',
@@ -34,7 +33,7 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
   })
 
   useEffect(() => {
-    const { type, ...formData } = state
+    const { id, ...formData } = state
     const nameError = validation.validate('name', formData)
     const cpfError = validation.validate('cpf', formData)
     const emailError = validation.validate('email', formData)
@@ -59,20 +58,26 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: phoneMask(e.target.value) }) }
 
   const handleAdition = (): void => {
-    setState({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
+    setState({ id: '', name: '', cpf: '', email: '', phone: '', address: '' })
     toggleModal()
   }
 
+  const handleEdition = (clientId: string): void => {
+    const clientData = clients.find(({ id }) => id === clientId)
+    setState({ id: clientData.id, name: clientData.name, cpf: clientData.cpf, email: clientData.email, phone: clientData.phone, address: clientData.address })
+    toggleModal()
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     if (!errorState.formInvalid) {
-      const { type, ...clientData } = state
-      const unmaskedClientData = {
-        ...clientData,
-        cpf: removeMask(clientData.cpf),
-        phone: removeMask(clientData.phone)
+      const unmaskedClientData = { ...state, cpf: removeMask(state.cpf), phone: removeMask(state.phone) }
+
+      let updatedClients = [] as ClientModel[]
+      if (unmaskedClientData.id) {
+        updatedClients = await updateClient.update(unmaskedClientData)
+      } else {
+        updatedClients = await addClient.add(unmaskedClientData)
       }
-      const updatedClients = await addClient.add(unmaskedClientData)
       setClients(addClientMasksMapper(updatedClients))
 
       toggleModal()
@@ -141,6 +146,7 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
                       key={client.id}
                       deleteClient={deleteClient}
                       setClients={setClients}
+                      handleEdition={handleEdition}
                     />
                   ))
                 }
@@ -191,7 +197,7 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
                     as="h3"
                     className="text-lg text-center font-medium leading-6 text-primary"
                   >
-                    { state.type === 'add' ? 'Adicionar Cliente' : 'Editar Cliente' }
+                    { state.id ? 'Editar Cliente' : 'Adicionar Cliente' }
                   </Dialog.Title>
                   <div className="w-full mt-4">
                     <FormContext.Provider value={{ state, setState, errorState }}>
@@ -236,7 +242,7 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
                           onChange={handlePhoneChange}
                         />
 
-                        <SubmitButton text={state.type === 'add' ? 'Adicionar Cliente' : 'Editar Cliente'}/>
+                        <SubmitButton text={state.id ? 'Editar Cliente' : 'Adicionar Cliente' }/>
                       </form>
                     </FormContext.Provider>
                   </div>
