@@ -1,8 +1,35 @@
 import { ClientModel } from '@/domain/models'
 import { DeleteClient } from '@/domain/usecases'
-import { ClientItem, Header } from '@/presentation/components'
-import { useState } from 'react'
+import { ClientItem, Header, SubmitButton, TextInput } from '@/presentation/components'
+import { AddIcon } from '@/presentation/components/Icons'
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
+import { FormContext } from '@/presentation/contexts'
+
+const classNames = (...classes: string[]): string => {
+  return classes.filter(Boolean).join(' ')
+}
+
+const cpfMask = (value: string): string => {
+  return value
+    .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
+    .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
+    .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+}
+
+const phoneMask = (value: string): string => {
+  return value
+    .replace(/\D/g, '')
+    .replace(/(\d{2})(\d)/, '($1) $2')
+    .replace(/(\d{3})(\d)/, '$1 $2')
+    .replace(/(\d{3})(\d)/, '$1 $2')
+    .replace(/(\d{3})\d+?$/, '$1')
+}
+
+type ModalDataModel = Omit<ClientModel, 'id'> & { type: 'add' | 'edit' }
 
 type Props = {
   deleteClient: DeleteClient
@@ -11,6 +38,28 @@ type Props = {
 export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
   const loadedClients = useLoaderData() as ClientModel[]
   const [clients, setClients] = useState(loadedClients)
+  const [isOpen, setIsOpen] = useState(false)
+  const [state, setState] = useState<ModalDataModel>({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
+
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setState({ ...state, [e.target.name]: cpfMask(e.target.value) })
+  }
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setState({ ...state, [e.target.name]: phoneMask(e.target.value) })
+  }
+
+  const handleAdition = (): void => {
+    setState({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
+    toggleModal()
+  }
+
+  const toggleModal = (): void => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <div className={`
       bg-gradient-to-tr from-primary to-green-600/60
@@ -25,12 +74,22 @@ export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
         {
           clients.length !== 0 && (
           <div className="rounded-xl space-y-1 bg-primary/40 p-1 w-full shadow">
-            <h2 className={`
-              bg-white/25 w-full rounded-lg py-2.5
-              text-lg text-center font-semibold leading-5 text-white
-            `}>
-              Lista de Clientes
-            </h2>
+            <div className="relative">
+              <h2 className={`
+                bg-white/25 w-full rounded-lg py-2.5
+                text-lg text-center font-semibold leading-5 text-white
+              `}>
+                Lista de Clientes
+              </h2>
+              <div className="absolute top-0 right-0 bottom-0 p-1">
+                <button
+                  className="bg-cyan-500 rounded-lg"
+                  onClick={() => { handleAdition() }}
+                >
+                  <AddIcon />
+                </button>
+              </div>
+            </div>
             <table className='w-full table-auto border-separate text-white'>
               <thead>
                 <tr className="bg-white/[0.12]">
@@ -66,6 +125,104 @@ export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
             </table>
           </div>
           )}
+
+        <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={toggleModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-40" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all relative">
+                  <div className="absolute top-5 right-7">
+                    <button
+                      type="button"
+                      className={classNames(
+                        'flex justify-center text-xs font-medium text-primary hover:text-vividBurgundy',
+                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
+                      )}
+                      onClick={toggleModal}
+                    >
+                      fechar
+                    </button>
+                  </div>
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg text-center font-medium leading-6 text-primary"
+                  >
+                    { state.type === 'add' ? 'Adicionar Cliente' : 'Editar Cliente' }
+                  </Dialog.Title>
+                  <div className="w-full mt-4">
+                    <FormContext.Provider value={{ state, setState }}>
+                      <form className="space-y-5">
+                        <TextInput
+                          type="text"
+                          placeholder="Nome"
+                          name="name"
+                          className="auto-complete-white"
+                          onChange={handleChange}
+                        />
+                        <TextInput
+                          type="text"
+                          placeholder="CPF"
+                          name="cpf"
+                          value={state.cpf}
+                          className="auto-complete-white"
+                          onChange={handleCpfChange}
+                        />
+                        <TextInput
+                          type="email"
+                          placeholder="E-mail"
+                          name="email"
+                          value={state.email}
+                          className="auto-complete-white"
+                          onChange={handleChange}
+                        />
+                        <TextInput
+                          type="text"
+                          placeholder="Endereço"
+                          name="address"
+                          value={state.address}
+                          className="auto-complete-white"
+                          onChange={handleChange}
+                        />
+                        <TextInput
+                          type="text"
+                          placeholder="Telefone"
+                          name="phone"
+                          value={state.phone}
+                          className="auto-complete-white"
+                          onChange={handlePhoneChange}
+                        />
+
+                        <SubmitButton text={state.type === 'add' ? 'Adicionar Cliente' : 'Editar Cliente'}/>
+                      </form>
+                    </FormContext.Provider>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
       </main>
     </div>
   )
