@@ -41,6 +41,13 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient }: Props) => {
   const [clients, setClients] = useState(loadedClients)
   const [isOpen, setIsOpen] = useState(false)
   const [state, setState] = useState<ModalDataModel>({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
+  const [errorState] = useState({
+    name: '',
+    cpf: '',
+    email: '',
+    phone: '',
+    address: ''
+  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
 
@@ -181,7 +188,7 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient }: Props) => {
                     { state.type === 'add' ? 'Adicionar Cliente' : 'Editar Cliente' }
                   </Dialog.Title>
                   <div className="w-full mt-4">
-                    <FormContext.Provider value={{ state, setState }}>
+                    <FormContext.Provider value={{ state, setState, errorState }}>
                       <form className="space-y-5" onSubmit={handleSubmit}>
                         <TextInput
                           type="text"
