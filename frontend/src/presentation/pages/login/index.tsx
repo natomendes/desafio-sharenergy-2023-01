@@ -14,11 +14,15 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
   const { saveCurrentAccount } = useContext(MainContext)
   const navigate = useNavigate()
   const [showError, setShowError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [state, setState] = useState({
-    isLoading: false,
-    errorMessage: '',
     username: '',
     password: ''
+  })
+  const [errorState, setErrorState] = useState({
+    username: '',
+    password: '',
+    errorMessage: ''
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
@@ -26,8 +30,8 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
-      if (!state.isLoading && state.username && state.password) {
-        setState({ ...state, isLoading: true })
+      if (!isLoading && state.username && state.password) {
+        setIsLoading(true)
         const account = await authentication.auth({ username: state.username, password: state.password })
 
         saveCurrentAccount(account)
@@ -35,7 +39,11 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
         navigate('/', { replace: true })
       }
     } catch (error) {
-      setState({ ...state, isLoading: false, errorMessage: error.message })
+      setIsLoading(false)
+      setErrorState({
+        ...errorState,
+        errorMessage: error.message
+      })
       setShowError(true)
     }
   }
@@ -44,7 +52,7 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
     <div className='h-screen bg-gradient-to-tr from-primary to-green-600/60 flex flex-col justify-between'>
       <Header />
       <div className='px-4 flex h-full items-center justify-center relative'>
-        <FormContext.Provider value={{ state, setState }}>
+        <FormContext.Provider value={{ state, setState, errorState }}>
           <form
             onSubmit={handleSubmit}
             className='p-8 bg-lightGray flex flex-col gap-6 rounded shadow text-center'
@@ -78,7 +86,7 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <p className="text-gray-800 text-[14px] leading-6">{ state.errorMessage }</p>
+              <p className="text-gray-800 text-[14px] leading-6">{ errorState.errorMessage }</p>
             </Transition>
           </div>
         </FormContext.Provider>
