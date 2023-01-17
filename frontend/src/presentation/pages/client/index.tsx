@@ -8,24 +8,7 @@ import { useLoaderData } from 'react-router-dom'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
 import { classNames } from '@/presentation/utils'
-
-const cpfMask = (value: string): string => {
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d)/, '$1.$2')
-    .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{2})\d+?$/, '$1')
-}
-
-const phoneMask = (value: string): string => {
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '($1) $2')
-    .replace(/(\d{3})(\d)/, '$1 $2')
-    .replace(/(\d{3})(\d)/, '$1 $2')
-    .replace(/(\d{3})\d+?$/, '$1')
-}
+import { addClientMasksMapper, cpfMask, phoneMask, removeMask } from '@/presentation/utils/input-masks'
 
 type ModalDataModel = Omit<ClientModel, 'id'> & { type: 'add' | 'edit' }
 
@@ -37,7 +20,7 @@ type Props = {
 
 export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }: Props) => {
   const loadedClients = useLoaderData() as ClientModel[]
-  const [clients, setClients] = useState(loadedClients)
+  const [clients, setClients] = useState(addClientMasksMapper(loadedClients))
   const [isOpen, setIsOpen] = useState(false)
   const [state, setState] = useState<ModalDataModel>({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
   const [errorState, setErrorState] = useState({
@@ -71,13 +54,9 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
 
-  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setState({ ...state, [e.target.name]: cpfMask(e.target.value) })
-  }
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: cpfMask(e.target.value) }) }
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setState({ ...state, [e.target.name]: phoneMask(e.target.value) })
-  }
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: phoneMask(e.target.value) }) }
 
   const handleAdition = (): void => {
     setState({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
@@ -88,8 +67,13 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
     e.preventDefault()
     if (!errorState.formInvalid) {
       const { type, ...clientData } = state
-      const updatedClients = await addClient.add(clientData)
-      setClients(updatedClients)
+      const unmaskedClientData = {
+        ...clientData,
+        cpf: removeMask(clientData.cpf),
+        phone: removeMask(clientData.phone)
+      }
+      const updatedClients = await addClient.add(unmaskedClientData)
+      setClients(addClientMasksMapper(updatedClients))
 
       toggleModal()
     }
