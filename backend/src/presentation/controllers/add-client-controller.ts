@@ -1,5 +1,5 @@
 import { AddClient } from '../../domain/usecases'
-import { badRequest, forbidden, noContent, serverError } from '../helpers'
+import { badRequest, forbidden, ok, serverError } from '../helpers'
 import { Controller, ControllerRequest, ControllerResponse, Validation } from '../protocols'
 
 export class AddClientController implements Controller {
@@ -14,9 +14,9 @@ export class AddClientController implements Controller {
       if (error) return badRequest(error)
 
       const { name, email, phone, address, cpf } = request.body
-      await this.addClient.add({ name, email, phone, address, cpf })
+      const updatedUsers = await this.addClient.add({ name, email, phone, address, cpf })
 
-      return noContent()
+      return ok(updatedUsers)
     } catch (error) {
       if (error.name === 'CpfInUseError') {
         return forbidden(error)

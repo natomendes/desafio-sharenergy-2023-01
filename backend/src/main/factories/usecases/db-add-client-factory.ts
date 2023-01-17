@@ -3,5 +3,5 @@ import { ClientMongoRepository } from '../../../infra/db'
 
 export const makeDbAddAclient = (): DbAddClient => {
   const clientMongoRepository = new ClientMongoRepository()
-  return new DbAddClient(clientMongoRepository, clientMongoRepository)
+  return new DbAddClient(clientMongoRepository, clientMongoRepository, clientMongoRepository)
 }
