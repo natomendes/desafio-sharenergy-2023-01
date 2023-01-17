@@ -12,18 +12,24 @@ export class CpfValidation implements FieldValidation {
   }
 
   private isValid (cpf: string): boolean {
-    if (cpf.length !== 11) return false
-    if (cpf === '00000000000') return false
-    if (cpf.split('').some((digit) => isNaN(Number(digit)))) return false
+    const cpfUnformatted = cpf.replaceAll('.', '').replace('-', '')
+    console.log(cpfUnformatted)
+    if (cpfUnformatted.length !== 11) return false
+    if (cpfUnformatted === '00000000000') return false
+    if (cpfUnformatted.split('').some((digit) => isNaN(Number(digit)))) return false
 
-    const digitsArray = cpf.split('').slice(0, 9)
-    const verifiersDigits = cpf.slice(9)
+    const digitsArray = cpfUnformatted.split('').slice(0, 9)
+    const verifiersDigits = cpfUnformatted.slice(9)
     if (!this.validation(digitsArray, verifiersDigits[0])) return false
 
     this.multipliers.unshift(11)
     digitsArray.push(verifiersDigits[0])
-    if (!this.validation(digitsArray, verifiersDigits[1])) return false
+    if (!this.validation(digitsArray, verifiersDigits[1])) {
+      this.multipliers.shift()
+      return false
+    }
 
+    this.multipliers.shift()
     return true
   }
 

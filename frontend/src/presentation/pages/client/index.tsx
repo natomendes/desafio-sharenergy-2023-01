@@ -59,7 +59,7 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
       address: validation.validate('address', formData),
       phone: validation.validate('phone', formData)
     })
-  })
+  }, [state])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
 
