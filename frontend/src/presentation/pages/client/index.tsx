@@ -3,13 +3,11 @@ import { AddClient, DeleteClient } from '@/domain/usecases'
 import { ClientItem, Header, SubmitButton, TextInput } from '@/presentation/components'
 import { AddIcon } from '@/presentation/components/Icons'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { FormContext } from '@/presentation/contexts'
-
-const classNames = (...classes: string[]): string => {
-  return classes.filter(Boolean).join(' ')
-}
+import { Validation } from '@/presentation/protocols'
+import { classNames } from '@/presentation/utils'
 
 const cpfMask = (value: string): string => {
   return value
@@ -34,19 +32,33 @@ type ModalDataModel = Omit<ClientModel, 'id'> & { type: 'add' | 'edit' }
 type Props = {
   addClient: AddClient
   deleteClient: DeleteClient
+  validation: Validation
 }
 
-export const Client: React.FC<Props> = ({ addClient, deleteClient }: Props) => {
+export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }: Props) => {
   const loadedClients = useLoaderData() as ClientModel[]
   const [clients, setClients] = useState(loadedClients)
   const [isOpen, setIsOpen] = useState(false)
   const [state, setState] = useState<ModalDataModel>({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
-  const [errorState] = useState({
+  const [errorState, setErrorState] = useState({
     name: '',
     cpf: '',
     email: '',
     phone: '',
     address: ''
+  })
+
+  useEffect(() => {
+    const { type, ...formData } = state
+
+    setErrorState({
+      ...errorState,
+      name: validation.validate('name', formData),
+      cpf: validation.validate('cpf', formData),
+      email: validation.validate('email', formData),
+      address: validation.validate('address', formData),
+      phone: validation.validate('phone', formData)
+    })
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }

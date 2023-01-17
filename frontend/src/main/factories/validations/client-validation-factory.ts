@@ -6,5 +6,5 @@ export const makeClientValidation = (): ValidationComposite => ValidationComposi
   ...ValidationBuilder.field('cpf').required().cpf().build(),
   ...ValidationBuilder.field('email').required().email().build(),
   ...ValidationBuilder.field('address').required().build(),
-  ...ValidationBuilder.field('phone').required().cpf().build()
+  ...ValidationBuilder.field('phone').required().build()
 ])
