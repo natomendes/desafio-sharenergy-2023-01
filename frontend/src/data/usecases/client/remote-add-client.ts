@@ -1,5 +1,6 @@
 import { HttpClient, HttpStatusCode } from '@/data/protocols/http/http-client'
 import { CpfInUseError, UnexpectedError } from '@/domain/errors'
+import { ClientModel } from '@/domain/models'
 import { AddClient, ClientParams } from '@/domain/usecases'
 
 export class RemoteAddClient implements AddClient {
@@ -8,7 +9,7 @@ export class RemoteAddClient implements AddClient {
     private readonly httpClient: HttpClient
   ) {}
 
-  async add (clientData: ClientParams): Promise<void> {
+  async add (clientData: ClientParams): Promise<ClientModel[]> {
     const httpReponse = await this.httpClient.request({
       url: this.url,
       method: 'post',
@@ -16,7 +17,7 @@ export class RemoteAddClient implements AddClient {
     })
 
     switch (httpReponse.statusCode) {
-      case HttpStatusCode.noContent: break
+      case HttpStatusCode.ok: return httpReponse.body
       case HttpStatusCode.forbidden: throw new CpfInUseError()
       default: throw new UnexpectedError()
     }

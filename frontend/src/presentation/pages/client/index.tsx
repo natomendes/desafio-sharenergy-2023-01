@@ -1,5 +1,5 @@
 import { ClientModel } from '@/domain/models'
-import { DeleteClient } from '@/domain/usecases'
+import { AddClient, DeleteClient } from '@/domain/usecases'
 import { ClientItem, Header, SubmitButton, TextInput } from '@/presentation/components'
 import { AddIcon } from '@/presentation/components/Icons'
 import { Dialog, Transition } from '@headlessui/react'
@@ -13,11 +13,11 @@ const classNames = (...classes: string[]): string => {
 
 const cpfMask = (value: string): string => {
   return value
-    .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
-    .replace(/(\d{3})(\d)/, '$1.$2') // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+    .replace(/\D/g, '')
+    .replace(/(\d{3})(\d)/, '$1.$2')
     .replace(/(\d{3})(\d)/, '$1.$2')
     .replace(/(\d{3})(\d{1,2})/, '$1-$2')
-    .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+    .replace(/(-\d{2})\d+?$/, '$1')
 }
 
 const phoneMask = (value: string): string => {
@@ -32,10 +32,11 @@ const phoneMask = (value: string): string => {
 type ModalDataModel = Omit<ClientModel, 'id'> & { type: 'add' | 'edit' }
 
 type Props = {
+  addClient: AddClient
   deleteClient: DeleteClient
 }
 
-export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
+export const Client: React.FC<Props> = ({ addClient, deleteClient }: Props) => {
   const loadedClients = useLoaderData() as ClientModel[]
   const [clients, setClients] = useState(loadedClients)
   const [isOpen, setIsOpen] = useState(false)
@@ -53,6 +54,15 @@ export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
 
   const handleAdition = (): void => {
     setState({ type: 'add', name: '', cpf: '', email: '', phone: '', address: '' })
+    toggleModal()
+  }
+
+  const handleSubmit = async (): Promise<void> => {
+    const { type, ...clientData } = state
+    const updatedClients = await addClient.add(clientData)
+
+    setClients(updatedClients)
+
     toggleModal()
   }
 
@@ -172,7 +182,7 @@ export const Client: React.FC<Props> = ({ deleteClient }: Props) => {
                   </Dialog.Title>
                   <div className="w-full mt-4">
                     <FormContext.Provider value={{ state, setState }}>
-                      <form className="space-y-5">
+                      <form className="space-y-5" onSubmit={handleSubmit}>
                         <TextInput
                           type="text"
                           placeholder="Nome"
