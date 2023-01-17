@@ -13,7 +13,6 @@ export class CpfValidation implements FieldValidation {
 
   private isValid (cpf: string): boolean {
     const cpfUnformatted = cpf.replaceAll('.', '').replace('-', '')
-    console.log(cpfUnformatted)
     if (cpfUnformatted.length !== 11) return false
     if (cpfUnformatted === '00000000000') return false
     if (cpfUnformatted.split('').some((digit) => isNaN(Number(digit)))) return false

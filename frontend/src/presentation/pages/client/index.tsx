@@ -3,7 +3,7 @@ import { AddClient, DeleteClient } from '@/domain/usecases'
 import { ClientItem, Header, SubmitButton, TextInput } from '@/presentation/components'
 import { AddIcon } from '@/presentation/components/Icons'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
@@ -45,19 +45,27 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
     cpf: '',
     email: '',
     phone: '',
-    address: ''
+    address: '',
+    errorMessage: '',
+    formInvalid: true
   })
 
   useEffect(() => {
     const { type, ...formData } = state
+    const nameError = validation.validate('name', formData)
+    const cpfError = validation.validate('cpf', formData)
+    const emailError = validation.validate('email', formData)
+    const addressError = validation.validate('address', formData)
+    const phoneError = validation.validate('phone', formData)
 
     setErrorState({
       ...errorState,
-      name: validation.validate('name', formData),
-      cpf: validation.validate('cpf', formData),
-      email: validation.validate('email', formData),
-      address: validation.validate('address', formData),
-      phone: validation.validate('phone', formData)
+      name: nameError,
+      cpf: cpfError,
+      email: emailError,
+      address: addressError,
+      phone: phoneError,
+      formInvalid: !!nameError || !!cpfError || !!emailError || !!addressError || !!phoneError
     })
   }, [state])
 
@@ -76,13 +84,15 @@ export const Client: React.FC<Props> = ({ addClient, deleteClient, validation }:
     toggleModal()
   }
 
-  const handleSubmit = async (): Promise<void> => {
-    const { type, ...clientData } = state
-    const updatedClients = await addClient.add(clientData)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault()
+    if (!errorState.formInvalid) {
+      const { type, ...clientData } = state
+      const updatedClients = await addClient.add(clientData)
+      setClients(updatedClients)
 
-    setClients(updatedClients)
-
-    toggleModal()
+      toggleModal()
+    }
   }
 
   const toggleModal = (): void => {
