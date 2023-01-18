@@ -1,39 +1,30 @@
-import { Header } from '@/presentation/components'
-import { Dialog, Tab, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { CatModal, Header } from '@/presentation/components'
+import { classNames } from '@/presentation/utils'
 import { httpStatus } from './htpp-status'
-
-const classNames = (...classes: string[]): string => {
-  return classes.filter(Boolean).join(' ')
-}
+import { Tab } from '@headlessui/react'
+import { useState } from 'react'
 
 export const HttpCats: React.FC = () => {
   const [statusCode] = useState(httpStatus)
   const [imgSrc, setImgSrc] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
-  const toggleModal = (): void => {
+  const showImage = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    setImgSrc(`https://http.cat/${event.currentTarget.name}`)
     setIsOpen(!isOpen)
   }
 
-  const showImage = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setImgSrc(`https://http.cat/${event.currentTarget.name}`)
-    toggleModal()
-  }
-
   return (
-    <div className={`
-      bg-gradient-to-tr from-primary to-green-600/60
-      min-h-screen flex flex-col      
-    `}>
+    <div className="bg-gradient-to-tr from-primary to-green-600/60 min-h-screen flex flex-col">
       <Header />
       <main className={`
         p-2 flex flex-col items-center gap-2 flex-grow
         lg:p-3 lg:max-w-5xl
         md:max-w-3xl
         mx-auto w-full
-      `}>
-      <Tab.Group>
+      `}
+      >
+        <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-primary/40 p-1 w-full">
             {Object.keys(statusCode).map((code) => (
               <Tab
@@ -54,16 +45,8 @@ export const HttpCats: React.FC = () => {
           </Tab.List>
           <Tab.Panels className="mt-2 w-full">
             {Object.values(statusCode).map((values, idx) => (
-              <Tab.Panel
-                key={idx}
-                className={classNames(
-                  'rounded-xl bg-white p-2'
-                )}
-              >
-                <ul
-                  className={classNames(
-                    'flex flex-wrap gap-1'
-                  )}>
+              <Tab.Panel key={idx} className='rounded-xl bg-white p-2'>
+                <ul className='flex flex-wrap gap-1'>
                   {values.map(({ status, message }) => (
                     <li
                       key={status}
@@ -75,17 +58,13 @@ export const HttpCats: React.FC = () => {
                         'lg:basis-[20%]'
                       )}
                     >
-                      <button
-                        name={status}
-                        onClick={showImage}
-                        className={classNames(
-                          'w-full h-full p-2'
-                        )}
-                      >
+                      <button name={status} onClick={showImage} className='w-full h-full p-2' >
                         <h3 className="text-sm font-medium leading-5 text-vividBurgundy">
                           {status}
                         </h3>
-                        <h2 className="text-xs text-secondary whitespace-prewrap">{message}</h2>
+                        <h2 className="text-xs text-secondary whitespace-prewrap">
+                          {message}
+                        </h2>
                       </button>
                     </li>
                   ))}
@@ -94,56 +73,7 @@ export const HttpCats: React.FC = () => {
             ))}
           </Tab.Panels>
         </Tab.Group>
-        <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={toggleModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all relative">
-                  <div className="absolute top-5 right-7">
-                    <button
-                      type="button"
-                      className="flex justify-center text-xs font-medium text-primary hover:text-vividBurgundy focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                      onClick={toggleModal}
-                    >
-                      fechar
-                    </button>
-                  </div>
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg text-center font-medium leading-6 text-primary"
-                  >
-                    Http Status Code
-                  </Dialog.Title>
-                  <div className="mt-2 rounded-2xl overflow-hidden">
-                    <img src={imgSrc} alt="http status code cat image" />
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+        <CatModal isOpen={isOpen} setIsOpen={setIsOpen} imgSrc={imgSrc}/>
       </main>
     </div>
   )
