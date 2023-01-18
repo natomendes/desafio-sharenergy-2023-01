@@ -1,4 +1,4 @@
-import { CpfValidation, EmailValidation, RequiredFieldValidation } from '@/validation/validators'
+import { CpfValidation, EmailValidation, PhoneValidation, RequiredFieldValidation } from '@/validation/validators'
 import { FieldValidation } from '@/validation/protocols'
 
 export class ValidationBuilder {
@@ -23,6 +23,11 @@ export class ValidationBuilder {
 
   cpf (): ValidationBuilder {
     this.validations.push(new CpfValidation(this.fieldName))
+    return this
+  }
+
+  phone (): ValidationBuilder {
+    this.validations.push(new PhoneValidation(this.fieldName))
     return this
   }
 
