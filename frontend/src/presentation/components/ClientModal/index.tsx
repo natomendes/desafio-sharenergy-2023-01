@@ -2,7 +2,7 @@ import { SubmitButton, TextInput } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 import { classNames } from '@/presentation/utils'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useContext } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 
 type Props = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -10,7 +10,14 @@ type Props = {
 }
 
 export const ClientModal: React.FC<Props> = ({ handleChange, handleSubmit }: Props) => {
-  const { state, isOpen, setIsOpen } = useContext(FormContext)
+  const { state, isOpen, setIsOpen, errorState, setErrorState } = useContext(FormContext)
+  const [showError, setShowError] = useState(false)
+
+  useEffect(() => {
+    if (errorState.errorMessage) {
+      setShowError(true)
+    }
+  }, [errorState.errorMessage])
   return (
     <Transition appear show={isOpen} as={Fragment}>
     <Dialog as="div" className="relative z-10" onClose={() => { setIsOpen(!isOpen) }}>
@@ -100,6 +107,31 @@ export const ClientModal: React.FC<Props> = ({ handleChange, handleSubmit }: Pro
 
                     <SubmitButton text={state.id ? 'Editar Cliente' : 'Adicionar Cliente' }/>
                   </form>
+              </div>
+              <div className='absolute top-0 right-0 left-0'>
+                <Transition
+                  show={showError}
+                  className={`
+                  bg-red-400 rounded-b shadow
+                  overflow-hidden
+                  text-center
+                  whitespace-nowrap
+                `}
+                  enter="transition-opacity duration-500"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  afterEnter={() => {
+                    setTimeout(() => {
+                      setErrorState({ ...errorState, errorMessage: '' })
+                      setShowError(false)
+                    }, 2500)
+                  }}
+                  leave="transition-opacity duration-500"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <p className="text-white text-[14px] leading-6">{ errorState.errorMessage }</p>
+                </Transition>
               </div>
             </Dialog.Panel>
           </Transition.Child>

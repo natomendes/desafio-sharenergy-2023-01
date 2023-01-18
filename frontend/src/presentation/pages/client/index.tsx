@@ -48,18 +48,23 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     if (!errorState.formInvalid) {
-      setIsLoading(true)
-      const unmaskedClientData = { ...state, cpf: removeMask(state.cpf), phone: removeMask(state.phone) }
+      try {
+        setIsLoading(true)
+        const unmaskedClientData = { ...state, cpf: removeMask(state.cpf), phone: removeMask(state.phone) }
 
-      let updatedClients = [] as ClientModel[]
-      if (unmaskedClientData.id) {
-        updatedClients = await updateClient.update(unmaskedClientData)
-      } else {
-        updatedClients = await addClient.add(unmaskedClientData)
+        let updatedClients = [] as ClientModel[]
+        if (unmaskedClientData.id) {
+          updatedClients = await updateClient.update(unmaskedClientData)
+        } else {
+          updatedClients = await addClient.add(unmaskedClientData)
+        }
+        setClients(addClientMasksMapper(updatedClients))
+        setIsLoading(false)
+        setIsOpen(!isOpen)
+      } catch (error) {
+        setIsLoading(false)
+        setErrorState({ ...errorState, errorMessage: error.message })
       }
-      setClients(addClientMasksMapper(updatedClients))
-      setIsLoading(false)
-      setIsOpen(!isOpen)
     }
   }
 
@@ -120,7 +125,7 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
           </div>
           )}
 
-        <FormContext.Provider value={{ state, setState, errorState, isOpen, setIsOpen, isLoading }}>
+        <FormContext.Provider value={{ state, setState, errorState, setErrorState, isOpen, setIsOpen, isLoading }}>
           <ClientModal handleChange={handleChange} handleSubmit={handleSubmit}/>
         </FormContext.Provider>
       </main>
