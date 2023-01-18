@@ -18,7 +18,7 @@ export class RemoteLoadUsers implements LoadUsers {
 
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok: return httpResponse.body
-      case HttpStatusCode.unauthorized: throw new AccessDeniedError()
+      case HttpStatusCode.forbidden: throw new AccessDeniedError()
       default: throw new UnexpectedError()
     }
   }

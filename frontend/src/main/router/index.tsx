@@ -5,7 +5,7 @@ import { HttpCats } from '@/presentation/pages'
 import { PrivateRoute } from '@/main/proxies'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-const router = createBrowserRouter([{
+export const browserRouter = createBrowserRouter([{
   element: makeLogin({}),
   path: '/login'
 }, {
@@ -50,7 +50,7 @@ export const Router: React.FC = () => {
 
   return (
     <MainContext.Provider value={state}>
-      <RouterProvider router={router} />
+      <RouterProvider router={browserRouter} />
     </MainContext.Provider>
   )
 }

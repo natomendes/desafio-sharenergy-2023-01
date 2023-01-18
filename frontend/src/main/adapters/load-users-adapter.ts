@@ -1,14 +1,19 @@
+import { AccessDeniedError } from '@/domain'
 import { UserModel } from '@/domain/models'
 import { makeRemoteLoadUsers } from '@/main/factories/usecases'
-import { getCurrentAccountAdapter } from './current-account-adapter'
+import { useLogout } from '@/presentation/hooks/use-logout'
 
 export const loadUsersAdapter = async (): Promise<UserModel[]> => {
-  const account = getCurrentAccountAdapter()
-  if (account) {
+  try {
     const data = await makeRemoteLoadUsers().load('1')
 
     return data
+  } catch (error) {
+    if (error instanceof AccessDeniedError) {
+      const logout = useLogout()
+      logout()
+    } else {
+      throw error
+    }
   }
-
-  return null
 }
