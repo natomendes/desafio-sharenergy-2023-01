@@ -18,6 +18,7 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
   const loadedClients = useLoaderData() as ClientModel[]
   const [clients, setClients] = useState(addClientMasksMapper(loadedClients))
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [state, setState] = useState<ClientModel>(clientState)
   const [errorState, setErrorState] = useState<ClientErrorState>(clientErrorState)
 
@@ -47,6 +48,7 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     if (!errorState.formInvalid) {
+      setIsLoading(true)
       const unmaskedClientData = { ...state, cpf: removeMask(state.cpf), phone: removeMask(state.phone) }
 
       let updatedClients = [] as ClientModel[]
@@ -56,7 +58,7 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
         updatedClients = await addClient.add(unmaskedClientData)
       }
       setClients(addClientMasksMapper(updatedClients))
-
+      setIsLoading(false)
       setIsOpen(!isOpen)
     }
   }
@@ -118,7 +120,7 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
           </div>
           )}
 
-        <FormContext.Provider value={{ state, setState, errorState, isOpen, setIsOpen }}>
+        <FormContext.Provider value={{ state, setState, errorState, isOpen, setIsOpen, isLoading }}>
           <ClientModal handleChange={handleChange} handleSubmit={handleSubmit}/>
         </FormContext.Provider>
       </main>
