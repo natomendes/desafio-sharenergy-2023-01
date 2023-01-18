@@ -1,6 +1,6 @@
+import { makeRemoteAddClient, makeRemoteDeleteClient, makeRemoteUpdateClient } from '@/main/factories/usecases'
+import { makeClientValidation } from '@/main/factories/validations'
 import { Client } from '@/presentation/pages'
-import { makeRemoteAddClient, makeRemoteDeleteClient, makeRemoteUpdateClient } from '../usecases'
-import { makeClientValidation } from '../validations/client-validation-factory'
 
 export const makeClient: React.FC = (): JSX.Element => {
   return (

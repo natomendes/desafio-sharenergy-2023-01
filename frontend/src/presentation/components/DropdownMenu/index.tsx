@@ -1,8 +1,8 @@
+import { CatIcon, ClientIcon, DogIcon, LogoutIcon, ThreeDashesIcon, UsersIcon } from '@/presentation/components'
 import { MainContext } from '@/presentation/contexts'
 import { Popover } from '@headlessui/react'
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CatIcon, ClientIcon, DogIcon, LogoutIcon, ThreeDashesIcon, UsersIcon } from '../Icons'
+import { useContext } from 'react'
 
 export const DropdownMenu: React.FC = () => {
   const navigate = useNavigate()

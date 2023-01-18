@@ -1,9 +1,8 @@
+import { SubmitButton, TextInput } from '@/presentation/components'
 import { FormContext } from '@/presentation/contexts'
 import { classNames } from '@/presentation/utils'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext } from 'react'
-import { SubmitButton } from '../SubmitButton'
-import { TextInput } from '../TextInput'
 
 type Props = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void

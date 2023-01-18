@@ -1,5 +1,5 @@
+import { makeRemoteGetRandomDog } from '@/main/factories/usecases'
 import { RandomDog } from '@/presentation/pages'
-import { makeRemoteGetRandomDog } from '../usecases'
 
 export const makeRandomDog: React.FC = (): JSX.Element => {
   return (

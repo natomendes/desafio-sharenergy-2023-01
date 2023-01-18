@@ -1,5 +1,5 @@
+import { makeRemoteLoadUsers } from '@/main/factories/usecases'
 import { User } from '@/presentation/pages'
-import { makeRemoteLoadUsers } from '../usecases'
 
 export const makeUser: React.FC = (): JSX.Element => {
   return (

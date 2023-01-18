@@ -1,5 +1,5 @@
-import { RemoteGetRandomDog } from '@/data/usecases/remote-get-random-dog'
-import { makeAxiosHttpClient } from '../http'
+import { makeAxiosHttpClient } from '@/main/factories/http'
+import { RemoteGetRandomDog } from '@/data/usecases'
 
 export const makeRemoteGetRandomDog = (): RemoteGetRandomDog => {
   return new RemoteGetRandomDog(

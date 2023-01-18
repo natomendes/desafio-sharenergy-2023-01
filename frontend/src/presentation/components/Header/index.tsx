@@ -1,5 +1,5 @@
+import { DropdownMenu } from '@/presentation/components'
 import logo from '@/assets/images/logo_color.png'
-import { DropdownMenu } from '../DropdownMenu'
 
 export const Header: React.FC = () => {
   return (

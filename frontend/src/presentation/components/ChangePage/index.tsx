@@ -1,4 +1,4 @@
-import { SideArrow } from '../Icons'
+import { SideArrow } from '@/presentation/components'
 
 type Props = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
   prev: boolean

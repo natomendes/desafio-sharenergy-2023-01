@@ -1,6 +1,6 @@
+import { PencilIcon, TrashIcon } from '@/presentation/components'
 import { ClientModel } from '@/domain/models'
 import { DeleteClient } from '@/domain/usecases'
-import { PencilIcon, TrashIcon } from '../Icons'
 
 type Props = ClientModel & {
   deleteClient: DeleteClient

@@ -1,11 +1,11 @@
-import { AddClient, DeleteClient, UpdateClient, ClientModel } from '@/domain'
+import { ClientErrorState, clientErrorState, clientState, validateClientState } from './client-helper'
 import { addClientMasksMapper, cpfMask, phoneMask, removeMask } from '@/presentation/utils'
 import { ClientItem, Header, AddIcon, ClientModal } from '@/presentation/components'
+import { AddClient, DeleteClient, UpdateClient, ClientModel } from '@/domain'
 import { FormContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols'
 import React, { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
-import { ClientErrorState, clientErrorState, clientState, validateClientState } from './client-helper'
 
 type Props = {
   addClient: AddClient

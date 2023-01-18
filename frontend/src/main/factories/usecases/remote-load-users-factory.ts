@@ -1,6 +1,6 @@
-import { RemoteLoadUsers } from '@/data/usecases/remote-load-users'
-import { makeAuthHttpClientDecorator } from '../decorators/auth-http-client-decorator-factory'
-import { makeApiUrl } from '../http'
+import { makeAuthHttpClientDecorator } from '@/main/factories/decorators'
+import { makeApiUrl } from '@/main/factories/http'
+import { RemoteLoadUsers } from '@/data/usecases'
 
 export const makeRemoteLoadUsers = (): RemoteLoadUsers => {
   return new RemoteLoadUsers(makeApiUrl('/users'), makeAuthHttpClientDecorator())

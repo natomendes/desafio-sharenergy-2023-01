@@ -1,5 +1,5 @@
+import { ValidationComposite } from '@/main/composites'
 import { ValidationBuilder } from '@/main/builders'
-import { ValidationComposite } from '@/main/composites/validation-composite'
 
 export const makeClientValidation = (): ValidationComposite => ValidationComposite.build([
   ...ValidationBuilder.field('name').required().build(),

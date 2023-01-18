@@ -1,5 +1,5 @@
+import { HttpClient, HttpRequest, HttpResponse } from '@/data/protocols/http'
 import { GetStorage } from '@/data/protocols/cache'
-import { HttpClient, HttpRequest, HttpResponse } from '@/data/protocols/http/http-client'
 import { AccountModel } from '@/domain/models'
 
 export class AuthHttpClientDecorator implements HttpClient {

@@ -1,5 +1,5 @@
-import { InvalidFieldError } from '../errors'
-import { FieldValidation } from '../protocols'
+import { FieldValidation } from '@/validation/protocols'
+import { InvalidFieldError } from '@/validation/errors'
 
 export class CpfValidation implements FieldValidation {
   private readonly multipliers = [10, 9, 8, 7, 6, 5, 4, 3, 2]

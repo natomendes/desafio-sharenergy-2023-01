@@ -1,6 +1,6 @@
 import { MainContext } from '@/presentation/contexts'
-import { useContext } from 'react'
 import { Navigate, useOutlet } from 'react-router-dom'
+import { useContext } from 'react'
 
 export const PrivateRoute = (): JSX.Element => {
   const { loadCurrentAccount } = useContext(MainContext)

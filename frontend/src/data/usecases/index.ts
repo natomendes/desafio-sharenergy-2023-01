@@ -1,0 +1,7 @@
+export * from './client/remote-add-client'
+export * from './client/remote-delete-client'
+export * from './client/remote-load-clients'
+export * from './client/remote-update-client'
+export * from './remote-authentication'
+export * from './remote-get-random-dog'
+export * from './remote-load-users'

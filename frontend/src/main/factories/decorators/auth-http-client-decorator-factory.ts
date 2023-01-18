@@ -1,7 +1,7 @@
-import { HttpClient } from '@/data/protocols/http/http-client'
 import { AuthHttpClientDecorator } from '@/main/decorators/auth-http-client-decorator'
-import { makeLocalStorageAdapter } from '../cache'
-import { makeAxiosHttpClient } from '../http'
+import { HttpClient } from '@/data/protocols/http/http-client'
+import { makeLocalStorageAdapter } from '@/main/factories/cache'
+import { makeAxiosHttpClient } from '@/main/factories/http'
 
 export const makeAuthHttpClientDecorator = (): HttpClient => {
   return new AuthHttpClientDecorator(makeLocalStorageAdapter(), makeAxiosHttpClient())

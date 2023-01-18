@@ -1,5 +1,5 @@
 import { UserModel } from '@/domain/models'
-import { makeRemoteLoadUsers } from '../factories/usecases'
+import { makeRemoteLoadUsers } from '@/main/factories/usecases'
 import { getCurrentAccountAdapter } from './current-account-adapter'
 
 export const loadUsersAdapter = async (): Promise<UserModel[]> => {

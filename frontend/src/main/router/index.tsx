@@ -1,10 +1,9 @@
+import { clearCurrentAccountAdapter, getCurrentAccountAdapter, loadClientsAdapter, randomDogLoader, setCurrentAccountAdapter, loadUsersAdapter } from '@/main/adapters'
+import { makeClient, makeLogin, makeRandomDog, makeUser } from '@/main/factories/pages'
 import { MainContext, MainContextProps } from '@/presentation/contexts'
 import { HttpCats } from '@/presentation/pages'
+import { PrivateRoute } from '@/main/proxies'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { clearCurrentAccountAdapter, getCurrentAccountAdapter, loadClientsAdapter, randomDogLoader, setCurrentAccountAdapter } from '../adapters'
-import { loadUsersAdapter } from '../adapters/load-users-adapter'
-import { makeClient, makeLogin, makeRandomDog, makeUser } from '../factories/pages'
-import { PrivateRoute } from '../proxies/private-route'
 
 const router = createBrowserRouter([{
   element: makeLogin({}),
