@@ -1,7 +1,7 @@
 import { GetRandomdog } from '@/domain/usecases'
 import { Header } from '@/presentation/components'
-import { useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
+import { useState } from 'react'
 
 type Props = {
   getRandomDog: GetRandomdog
@@ -17,10 +17,7 @@ export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
   }
 
   return (
-    <div className={`
-      bg-gradient-to-tr from-primary to-green-600/60
-      h-screen flex flex-col 
-    `}>
+    <div className='bg-gradient-to-tr from-primary to-green-600/60 h-screen flex flex-col'>
       <Header />
       <main className={`
         p-2 flex flex-col items-center gap-6 flex-grow
@@ -39,17 +36,8 @@ export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
         >
           Gerar nova imagem
         </button>
-        <div className={`
-          max-w-md lg:max-w-xl
-          p-1 rounded-lg bg-yellowOrange
-        `}>
-          <img
-            src={imgSrc}
-            alt="Random dog image"
-            className={`
-              rounded-lg object-cover max-h-[600px]
-            `}
-          />
+        <div className='max-w-md lg:max-w-xl p-1 rounded-lg bg-yellowOrange'>
+          <img src={imgSrc} alt="Random dog image" className='rounded-lg object-cover max-h-[600px]' />
         </div>
       </main>
     </div>
