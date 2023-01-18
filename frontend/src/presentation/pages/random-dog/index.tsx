@@ -1,5 +1,5 @@
 import { GetRandomdog } from '@/domain/usecases'
-import { Header } from '@/presentation/components'
+import { CircleIcon, Header } from '@/presentation/components'
 import { useLoaderData } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -10,10 +10,13 @@ type Props = {
 export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
   const imageUrl = useLoaderData() as string
   const [imgSrc, setImgSrc] = useState(imageUrl)
+  const [isLoading, setIsLoading] = useState(false)
 
   const refreshImage = async (): Promise<void> => {
+    setIsLoading(true)
     const url = await getRandomDog.get()
     setImgSrc(url)
+    setIsLoading(false)
   }
 
   return (
@@ -30,11 +33,11 @@ export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
           className={`
             bg-primary rounded-lg p-2.5 leading-5 text-white shadow
             ring-white ring-opacity-60 ring-offset-2 ring-offset-primary
-            border-2 border-yellowOrange
+            border-2 border-yellowOrange min-w-[163px] flex justify-center
             active:outline-none active:ring-2 active:text-yellowOrange         
           `}
         >
-          Gerar nova imagem
+          { isLoading ? <CircleIcon className="animate-spin h-5 w-5 text-white" /> : 'Gerar nova imagem' }
         </button>
         <div className='max-w-md lg:max-w-xl p-1 rounded-lg bg-yellowOrange'>
           <img src={imgSrc} alt="Random dog image" className='rounded-lg object-cover max-h-[600px]' />
