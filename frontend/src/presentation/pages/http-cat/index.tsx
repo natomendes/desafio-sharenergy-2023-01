@@ -18,14 +18,17 @@ export const HttpCats: React.FC = () => {
     <div className="bg-gradient-to-tr from-primary to-green-600/60 min-h-screen flex flex-col">
       <Header />
       <main className={`
-        p-2 flex flex-col items-center gap-2 flex-grow
+        p-2 flex flex-col items-center flex-grow
         lg:p-3 lg:max-w-5xl
         md:max-w-3xl
         mx-auto w-full
       `}
       >
+        <h2 className="bg-primary/40 w-full py-2.5 rounded-t-xl text-white text-center font-medium">
+          Navegue pelas abas e selecione um status code
+        </h2>
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-primary/40 p-1 w-full">
+          <Tab.List className="flex space-x-1 rounded-b-xl bg-primary/40 p-1 w-full">
             {Object.keys(statusCode).map((code) => (
               <Tab
                 key={code}
@@ -43,7 +46,7 @@ export const HttpCats: React.FC = () => {
               </Tab>
             ))}
           </Tab.List>
-          <Tab.Panels className="mt-2 w-full">
+          <Tab.Panels className="mt-4 w-full">
             {Object.values(statusCode).map((values, idx) => (
               <Tab.Panel key={idx} className='rounded-xl bg-white p-2'>
                 <ul className='flex flex-wrap gap-1'>

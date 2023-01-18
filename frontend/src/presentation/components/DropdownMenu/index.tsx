@@ -15,8 +15,8 @@ export const DropdownMenu: React.FC = () => {
 
   return (
   <Popover>
-    <Popover.Button>
-      <ThreeDashesIcon className='w-6 h-6 text-primary' />
+    <Popover.Button className="group rounded hover:bg-primary outline-none p-1">
+      <ThreeDashesIcon className='w-6 h-6 text-primary group-hover:text-white' />
     </Popover.Button>
     <Popover.Panel className={`
       absolute z-10 shadow-lg
