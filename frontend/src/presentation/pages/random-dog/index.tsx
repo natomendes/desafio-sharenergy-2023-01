@@ -28,18 +28,26 @@ export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
         md:max-w-3xl
         mx-auto w-full
       `}>
-        <button
-          onClick={async () => { await refreshImage() }}
-          className={`
-            bg-primary rounded-lg p-2.5 leading-5 text-white shadow
-            ring-white ring-opacity-60 ring-offset-2 ring-offset-primary
-            border-2 border-yellowOrange min-w-[163px] flex justify-center
-            active:outline-none active:ring-2 active:text-yellowOrange         
-          `}
-        >
-          { isLoading ? <CircleIcon className="animate-spin h-5 w-5 text-white" /> : 'Gerar nova imagem' }
-        </button>
-        <div className='max-w-md lg:max-w-xl p-1 rounded-lg bg-yellowOrange'>
+        <div className={`
+          bg-primary/40 w-full py-2.5 rounded-xl text-white text-center font-medium
+          flex flex-col items-center gap-1
+        `}>
+          <h2>
+            Clique para visualizar uma nova imagem
+          </h2>
+          <button
+            onClick={async () => { await refreshImage() }}
+            className={`
+              bg-white rounded-lg p-2.5 leading-5 text-primary shadow
+              ring-white ring-opacity-60 ring-offset-2 ring-offset-primary outline-none ring-2
+              min-w-[163px] flex justify-center
+              active:outline-none active:ring-2 active:shadow-none         
+            `}
+          >
+            { isLoading ? <CircleIcon className="animate-spin h-5 w-5 text-white" /> : 'Gerar nova imagem' }
+          </button>
+        </div>
+        <div className='max-w-md lg:max-w-xl p-1 rounded-lg bg-primary/60 shadow'>
           <img src={imgSrc} alt="Random dog image" className='rounded-lg object-cover max-h-[600px]' />
         </div>
       </main>
