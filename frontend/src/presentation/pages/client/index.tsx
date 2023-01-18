@@ -91,10 +91,10 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
               </h2>
               <div className="absolute top-0 right-0 bottom-0 p-1">
                 <button
-                  className="bg-cyan-500 rounded-lg"
+                  className="bg-cyan-500/70 rounded-lg group hover:bg-cyan-500/90 hover:shadow"
                   onClick={() => { setFormData() }}
                 >
-                  <AddIcon />
+                  <AddIcon className="w-8 text-white group-hover:text-blue-800"/>
                 </button>
               </div>
             </div>

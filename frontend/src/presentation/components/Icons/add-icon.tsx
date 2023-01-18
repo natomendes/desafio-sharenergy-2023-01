@@ -1,10 +1,12 @@
-export const AddIcon: React.FC = () => {
+type Props = React.SVGProps<SVGSVGElement>
+
+export const AddIcon: React.FC<Props> = (props) => {
   return (
     <svg
+      {...props}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-8 text-white"
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>

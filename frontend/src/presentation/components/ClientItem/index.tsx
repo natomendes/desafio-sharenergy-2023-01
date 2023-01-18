@@ -27,13 +27,13 @@ export const ClientItem: React.FC<Props> = (props: Props) => {
       <td className='rounded-r-lg'>
         <div className='flex gap-1 justify-center'>
           <button
-            className="p-1 bg-yellowOrange/70 rounded group hover:bg-yellowOrange/90"
+            className="p-1 bg-yellowOrange/70 rounded group hover:bg-yellowOrange/90 hover:shadow"
             onClick={() => { props.handleEdition(props.id) }}
           >
             <PencilIcon className='w-4 fill-white group-hover:fill-orange-600' />
           </button>
           <button
-            className="p-1 bg-red-400/70 rounded group hover:bg-red-400/90"
+            className="p-1 bg-red-400/70 rounded group hover:bg-red-400/90 hover:shadow"
             onClick={handleDelete}
           >
             <TrashIcon className="w-4 text-white group-hover:text-red-700 hover:text-red-400/90" />
