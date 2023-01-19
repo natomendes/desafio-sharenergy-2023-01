@@ -206,6 +206,7 @@ describe('Client Routes', () => {
         .put('/clients')
         .set('x-access-token', 'any_token')
         .send({
+          id: 'any_id',
           email: 'any_email@mail.com',
           phone: 'any_phone',
           address: 'any_address',
@@ -219,8 +220,23 @@ describe('Client Routes', () => {
         .put('/clients')
         .set('x-access-token', 'any_token')
         .send({
+          id: 'any_id',
           name: 'any_name',
           phone: 'any_phone',
+          address: 'any_address',
+          cpf: 'any_cpf'
+        })
+        .expect(400)
+    })
+
+    it('Should return 400 if no phone is provided', async () => {
+      await request(app)
+        .put('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          id: 'any_id',
+          name: 'any_name',
+          email: 'any_email@mail.com',
           address: 'any_address',
           cpf: 'any_cpf'
         })
