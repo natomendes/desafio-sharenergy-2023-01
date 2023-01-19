@@ -41,4 +41,14 @@ describe('User Route', () => {
       .set('x-access-token', 'any_token')
       .expect(200)
   })
+
+  it('Should return 500 on server error', async () => {
+    jest.spyOn(axios, 'request')
+      .mockRejectedValueOnce(new Error())
+    await request(app)
+      .post('/users')
+      .send({ page: 1 })
+      .set('x-access-token', 'any_token')
+      .expect(500)
+  })
 })

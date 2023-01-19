@@ -9,14 +9,13 @@ export class LoadUsersController implements Controller {
   ) {}
 
   async handle (request: ControllerRequest): Promise<ControllerResponse> {
-    if (!request?.body?.page) return badRequest(new MissingParamError('page'))
+    if (!request.body.page) return badRequest(new MissingParamError('page'))
     try {
       const { page } = request.body
       const users = await this.loadUsers.load({ page })
 
       return ok(users)
     } catch (error) {
-      console.log(error)
       return serverError()
     }
   }
