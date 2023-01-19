@@ -270,5 +270,28 @@ describe('Client Routes', () => {
         })
         .expect(400)
     })
+
+    it('Should return 200 on success', async () => {
+      const { insertedId } = await clientCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        phone: 'any_phone',
+        address: 'any_address',
+        cpf: 'any_cpf'
+      })
+
+      await request(app)
+        .put('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          id: insertedId.toHexString(),
+          name: 'any_name',
+          email: 'any_email@mail.com',
+          phone: 'any_phone',
+          address: 'any_address',
+          cpf: 'any_cpf'
+        })
+        .expect(200)
+    })
   })
 })
