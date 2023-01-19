@@ -348,5 +348,16 @@ describe('Client Routes', () => {
         .send({ clientId: insertedId.toHexString() })
         .expect(204)
     })
+
+    it('Should return 500 on server error', async () => {
+      jest.spyOn(ClientMongoRepository.prototype, 'delete')
+        .mockRejectedValueOnce(new Error())
+
+      await request(app)
+        .delete('/clients')
+        .set('x-access-token', 'any_token')
+        .send({ clientId: '63c8d91da43d76ca70a67c6e' })
+        .expect(500)
+    })
   })
 })
