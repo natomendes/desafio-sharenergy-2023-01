@@ -1,8 +1,10 @@
+import axios from 'axios'
 import request from 'supertest'
 import { DbLoadAccountByToken } from '../../../src/data/usecases/db-load-account-by-token'
 import app from '../../../src/main/config/app'
+import { randomUserApiMock } from '../../mocks/random-users-api'
 
-describe('Login Routes', () => {
+describe('User Route', () => {
   beforeEach(() => {
     jest.spyOn(DbLoadAccountByToken.prototype, 'load')
       .mockResolvedValueOnce({
@@ -25,5 +27,18 @@ describe('Login Routes', () => {
       .post('/users')
       .set('x-access-token', 'any_token')
       .expect(400)
+  })
+
+  it('Should return 200 on success', async () => {
+    jest.spyOn(axios, 'request')
+      .mockResolvedValueOnce({
+        status: 200,
+        data: randomUserApiMock
+      })
+    await request(app)
+      .post('/users')
+      .send({ page: 1 })
+      .set('x-access-token', 'any_token')
+      .expect(200)
   })
 })
