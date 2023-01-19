@@ -179,4 +179,12 @@ describe('Client Routes', () => {
         .expect(500)
     })
   })
+
+  describe('PUT /clients', () => {
+    it('Should return 403 if no token is provided', async () => {
+      await request(app)
+        .put('/clients')
+        .expect(403)
+    })
+  })
 })
