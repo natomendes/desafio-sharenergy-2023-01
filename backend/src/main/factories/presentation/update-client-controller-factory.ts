@@ -1,7 +1,7 @@
 import { UpdateClientController } from '../../../presentation/controllers'
 import { makeDbUpdateClient } from '../usecases'
-import { makeClientValidation } from '../validations'
+import { makeUpdateClientValidation } from '../validations'
 
 export const makeUpdateClientController = (): UpdateClientController => {
-  return new UpdateClientController(makeClientValidation(), makeDbUpdateClient())
+  return new UpdateClientController(makeUpdateClientValidation(), makeDbUpdateClient())
 }
