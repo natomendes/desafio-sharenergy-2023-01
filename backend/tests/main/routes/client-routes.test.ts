@@ -199,5 +199,18 @@ describe('Client Routes', () => {
         })
         .expect(400)
     })
+
+    it('Should return 400 if no email is provided', async () => {
+      await request(app)
+        .put('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          name: 'any_name',
+          phone: 'any_phone',
+          address: 'any_address',
+          cpf: 'any_cpf'
+        })
+        .expect(400)
+    })
   })
 })
