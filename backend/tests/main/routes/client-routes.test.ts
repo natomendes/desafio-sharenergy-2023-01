@@ -23,6 +23,12 @@ describe('Client Routes', () => {
     await clientCollection.deleteMany({})
   })
   describe('GET /clients', () => {
+    it('Should return 403 if no token is provided', async () => {
+      await request(app)
+        .get('/clients')
+        .expect(403)
+    })
+
     it('Should return 200 on success', async () => {
       await clientCollection.insertOne({
         name: 'any_name',
