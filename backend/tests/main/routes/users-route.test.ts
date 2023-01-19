@@ -13,6 +13,13 @@ describe('Login Routes', () => {
         password: 'any_password'
       })
   })
+
+  it('Should return 403 if no token is provided', async () => {
+    await request(app)
+      .post('/users')
+      .expect(403)
+  })
+
   it('Should return 400 if no page is provided', async () => {
     await request(app)
       .post('/users')
