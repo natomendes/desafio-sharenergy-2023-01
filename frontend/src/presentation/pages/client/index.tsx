@@ -105,7 +105,8 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
                   <th>Cpf</th>
                   <th className='hidden md:table-cell'>Email</th>
                   <th className='hidden lg:table-cell'>Endereço</th>
-                  <th className='hidden lg:table-cell rounded-tr-lg'>Telefone</th>
+                  <th className='hidden lg:table-cell'>Telefone</th>
+                  <th className='rounded-r-lg'></th>
                 </tr>
               </thead>
               <tbody className='text-sm'>
