@@ -9,12 +9,13 @@ export const ChangePage: React.FC<Props> = ({ prev, ...props }: Props) => {
     <button
       {...props}
       className={`
-        border border-slate-500 rounded-full
+        rounded-full
+        ring-white ring-opacity-60 ring-offset-primary/40 outline-none ring-2
         w-[34px] flex justify-center items-center shrink-0
         disabled:opacity-30
       `}
     >
-      <SideArrow className={`overflow-visible text-slate-500 ${prev ? 'rotate-180' : ''}`}
+      <SideArrow className={`overflow-visible text-white ${prev ? 'rotate-180' : ''}`}
       />
     </button>
   )

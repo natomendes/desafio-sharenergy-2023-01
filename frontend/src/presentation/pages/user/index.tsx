@@ -16,9 +16,12 @@ export const User: React.FC<Props> = ({ loadUsers }: Props) => {
   const { page, users } = pageData
 
   const filterUsers = (users: UserModel[]): UserModel[] => {
-    return searchParam
-      ? users.filter(({ name }: UserModel) => name.toLowerCase().startsWith(searchParam.toLowerCase()))
-      : users
+    if (searchParam) {
+      const result = users.filter(({ name }: UserModel) => name.toLowerCase().startsWith(searchParam.toLowerCase()))
+
+      return result.length ? result : users
+    }
+    return users
   }
 
   const getPage = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
@@ -38,7 +41,7 @@ export const User: React.FC<Props> = ({ loadUsers }: Props) => {
         lg:p-3 lg:max-w-5xl
         mx-auto w-full
       `}>
-        <div className='flex justify-between gap-1 w-full'>
+        <div className='flex justify-between gap-2 w-full p-2 bg-primary/40 rounded-3xl'>
           <ChangePage name="prev" prev={true} disabled={page === 1} onClick={getPage} />
           <SearchInput searchParam={searchParam} setSearchParam={setSearchParam } />
           <ChangePage name="next" prev={false} onClick={getPage} />

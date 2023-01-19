@@ -11,11 +11,11 @@ export const SearchInput: React.FC<Props> = ({ searchParam, setSearchParam }: Pr
   return (
     <div
       className={`
-      text-slate-500
+      bg-primary/40 text-white
+      ring-white ring-opacity-60 ring-offset-primary/40 outline-none ring-2
       flex w-1/2 max-w-lg
-      md:w-1/3
-      lg:w-1/4
-      border border-slate-500 rounded-full py-1 px-1
+      md:w-1/3 lg:w-1/4
+      rounded-full py-1 px-1
       focus-within:w-full focus-within:px-2
       transition-all ease-in-out duration-1000
       [&:has(input:not(:placeholder-shown))]:w-full
@@ -45,8 +45,8 @@ export const SearchInput: React.FC<Props> = ({ searchParam, setSearchParam }: Pr
         value={searchParam}
         className={`
           bg-transparent
-          text-slate-500
-          placeholder-slate-500
+          text-white
+          placeholder-white/70
           outline-none
           text-center
           w-full

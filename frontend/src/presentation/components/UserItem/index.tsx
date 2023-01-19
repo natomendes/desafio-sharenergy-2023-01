@@ -9,7 +9,7 @@ type Props = {
 export const UserItem: React.FC<Props> = (props: Props) => {
   return (
     <li className={`
-    bg-lightGray shadow-md rounded overflow-hidden
+    bg-white/60 shadow-md rounded overflow-hidden
     h-fit p-2 flex items-center gap-1 max-w-[440px]
     lg:basis-1/3 lg:flex-grow lg:gap-3 lg:p-4 lg:min-w-[440px] lg:max-w-[464px]
   `}>
