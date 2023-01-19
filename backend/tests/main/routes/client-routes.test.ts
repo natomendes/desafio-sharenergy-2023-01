@@ -319,5 +319,12 @@ describe('Client Routes', () => {
         .delete('/clients')
         .expect(403)
     })
+
+    it('Should return 400 if no clientId is provided', async () => {
+      await request(app)
+        .delete('/clients')
+        .set('x-access-token', 'any_token')
+        .expect(400)
+    })
   })
 })
