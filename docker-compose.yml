@@ -15,15 +15,21 @@ services:
       - ./db-dump:/db-dump
     
   backend:
-    image: node:18
-    container_name: backend-sharenergy
+    build: ./backend
+    image: backend-sharenergy
     restart: always
-    working_dir: /api
-    command: bash -c "npm install --omit=dev && npm start"
-    volumes:
-      - ./backend/dist/:/api/dist/
-      - ./backend/package.json:/api/package.json
     ports:
       - "5050:5050"
     environment:
       - MONGO_URI=mongodb://root:123456@database:27017/sharenergy-db?authSource=admin
+    depends_on:
+      - database
+
+  frontend:
+    build: ./frontend
+    image: frontend-sharenergy
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
