@@ -3,14 +3,16 @@ import { FormContext, MainContext } from '@/presentation/contexts'
 import { Authentication } from '@/domain/usecases'
 import { Transition } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { Validation } from '@/presentation/protocols'
 import '@/presentation/styles/global.css'
 
 type Props = {
   authentication: Authentication
+  validation: Validation
 }
 
-export const Login: React.FC<Props> = ({ authentication }: Props) => {
+export const Login: React.FC<Props> = ({ authentication, validation }: Props) => {
   const { saveCurrentAccount } = useContext(MainContext)
   const navigate = useNavigate()
   const [showError, setShowError] = useState(false)
@@ -22,8 +24,21 @@ export const Login: React.FC<Props> = ({ authentication }: Props) => {
   const [errorState, setErrorState] = useState({
     username: '',
     password: '',
-    errorMessage: ''
+    errorMessage: '',
+    formInvalid: true
   })
+
+  useEffect(() => {
+    const usernameError = validation.validate('username', state)
+    const passwordError = validation.validate('password', state)
+
+    setErrorState({
+      ...errorState,
+      username: usernameError,
+      password: passwordError,
+      formInvalid: !!usernameError || !!passwordError
+    })
+  }, [state])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => { setState({ ...state, [e.target.name]: e.target.value }) }
 
