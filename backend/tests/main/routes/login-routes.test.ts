@@ -3,6 +3,7 @@ import request from 'supertest'
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../../../src/infra/db'
 import app from '../../../src/main/config/app'
+import { DbAuthentication } from '../../../src/data/usecases'
 
 let accountCollection: Collection
 
@@ -63,5 +64,16 @@ describe('Login Routes', () => {
         username: 'any_username'
       })
       .expect(400)
+  })
+
+  it('Should return 500 if any dependency throws', async () => {
+    jest.spyOn(DbAuthentication.prototype, 'auth').mockRejectedValueOnce(new Error())
+    await request(app)
+      .post('/login')
+      .send({
+        username: 'any_username',
+        password: '123456'
+      })
+      .expect(500)
   })
 })
