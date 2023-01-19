@@ -22,6 +22,7 @@ describe('Client Routes', () => {
     clientCollection = MongoHelper.getCollection('clients')
     await clientCollection.deleteMany({})
   })
+
   describe('GET /clients', () => {
     it('Should return 403 if no token is provided', async () => {
       await request(app)
@@ -50,6 +51,14 @@ describe('Client Routes', () => {
         .get('/clients')
         .set('x-access-token', 'any_token')
         .expect(500)
+    })
+  })
+
+  describe('POST /clients', () => {
+    it('Should return 403 if no token is provided', async () => {
+      await request(app)
+        .post('/clients')
+        .expect(403)
     })
   })
 })
