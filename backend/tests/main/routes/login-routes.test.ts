@@ -37,7 +37,7 @@ describe('Login Routes', () => {
       .expect(200)
   })
 
-  it('Should return 401 if on invalid credentials', async () => {
+  it('Should return 401 on invalid credentials', async () => {
     await request(app)
       .post('/login')
       .send({
@@ -45,5 +45,14 @@ describe('Login Routes', () => {
         password: '123456'
       })
       .expect(401)
+  })
+
+  it('Should return 400 if username is provided', async () => {
+    await request(app)
+      .post('/login')
+      .send({
+        password: '123456'
+      })
+      .expect(400)
   })
 })
