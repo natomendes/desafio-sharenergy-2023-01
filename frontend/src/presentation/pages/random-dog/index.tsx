@@ -23,14 +23,14 @@ export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
     <div className='bg-gradient-to-tr from-primary to-green-600/60 h-screen flex flex-col'>
       <Header />
       <main className={`
-        p-2 flex flex-col items-center gap-6 flex-grow
+        p-2 flex flex-col items-center gap-4 flex-grow
         lg:p-3 lg:max-w-5xl
         md:max-w-3xl
         mx-auto w-full
       `}>
         <div className={`
           bg-primary/40 w-full py-2.5 rounded-xl text-white text-center font-medium
-          flex flex-col items-center gap-1
+          flex flex-col items-center gap-2
         `}>
           <h2>
             Clique para visualizar uma nova imagem
@@ -44,7 +44,7 @@ export const RandomDog: React.FC<Props> = ({ getRandomDog }: Props) => {
               active:outline-none active:ring-2 active:shadow-none         
             `}
           >
-            { isLoading ? <CircleIcon className="animate-spin h-5 w-5 text-white" /> : 'Gerar nova imagem' }
+            { isLoading ? <CircleIcon className="animate-spin h-5 w-5 text-primary" /> : 'Gerar nova imagem' }
           </button>
         </div>
         <div className='max-w-md lg:max-w-xl p-1 rounded-lg bg-primary/60 shadow'>
