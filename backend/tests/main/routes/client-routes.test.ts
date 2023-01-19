@@ -312,4 +312,12 @@ describe('Client Routes', () => {
         .expect(500)
     })
   })
+
+  describe('DELETE /clients', () => {
+    it('Should return 403 if no token is provided', async () => {
+      await request(app)
+        .delete('/clients')
+        .expect(403)
+    })
+  })
 })
