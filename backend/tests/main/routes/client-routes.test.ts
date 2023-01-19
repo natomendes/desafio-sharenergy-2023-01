@@ -256,5 +256,19 @@ describe('Client Routes', () => {
         })
         .expect(400)
     })
+
+    it('Should return 400 if no cpf is provided', async () => {
+      await request(app)
+        .put('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          id: 'any_id',
+          name: 'any_name',
+          email: 'any_email@mail.com',
+          phone: 'any_phone',
+          address: 'any_address'
+        })
+        .expect(400)
+    })
   })
 })
