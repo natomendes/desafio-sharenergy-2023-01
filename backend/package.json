@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --silent --runInBand --no-cache --watch",
+    "test": "jest --passWithNoTests --silent --runInBand --no-cache",
+    "test:watch": "npm test -- --watch",
+    "test:ci": "npm test -- --coverage",
     "build": "rimraf dist && tsc",
     "start": "node ./dist/main/server.js",
     "dev": "nodemon ./src/main/server.ts --watch"
