@@ -326,5 +326,27 @@ describe('Client Routes', () => {
         .set('x-access-token', 'any_token')
         .expect(400)
     })
+
+    it('Should return 204 on success', async () => {
+      await request(app)
+        .delete('/clients')
+        .set('x-access-token', 'any_token')
+        .send({ clientId: '63c8d91da43d76ca70a67c6e' })
+        .expect(204)
+
+      const { insertedId } = await clientCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        phone: 'any_phone',
+        address: 'any_address',
+        cpf: 'any_cpf'
+      })
+
+      await request(app)
+        .delete('/clients')
+        .set('x-access-token', 'any_token')
+        .send({ clientId: insertedId.toHexString() })
+        .expect(204)
+    })
   })
 })
