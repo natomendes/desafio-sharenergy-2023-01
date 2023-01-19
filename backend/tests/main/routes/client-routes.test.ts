@@ -293,5 +293,23 @@ describe('Client Routes', () => {
         })
         .expect(200)
     })
+
+    it('Should return 500 on server error', async () => {
+      jest.spyOn(ClientMongoRepository.prototype, 'update')
+        .mockRejectedValueOnce(new Error())
+
+      await request(app)
+        .put('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          id: 'any_id',
+          name: 'any_name',
+          email: 'any_email@mail.com',
+          phone: 'any_phone',
+          address: 'any_address',
+          cpf: 'any_cpf'
+        })
+        .expect(500)
+    })
   })
 })
