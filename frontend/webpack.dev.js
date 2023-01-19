@@ -21,7 +21,6 @@ module.exports = merge(common, {
     }]
   },
   devServer: {
-    static: './public/images',
     devMiddleware: {
       writeToDisk: true
     },
