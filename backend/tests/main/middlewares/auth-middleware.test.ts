@@ -1,7 +1,7 @@
 import request from 'supertest'
 import app from '../../../src/main/config/app'
 import jwt from 'jsonwebtoken'
-import { MongoHelper } from '../../../src/infra/db'
+import { AccountMongoRepository, MongoHelper } from '../../../src/infra/db'
 import { hash } from 'bcrypt'
 
 describe('User Route', () => {
@@ -55,5 +55,15 @@ describe('User Route', () => {
       .set('x-access-token', account.accessToken)
       .send({ page: '1' })
       .expect(200)
+  })
+
+  it('Should return 500 on server error', async () => {
+    jest.spyOn(jwt, 'verify').mockImplementationOnce(() => 'any_token')
+    jest.spyOn(AccountMongoRepository.prototype, 'loadByToken')
+      .mockRejectedValueOnce(new Error())
+    await request(app)
+      .post('/users')
+      .set('x-access-token', 'any_token')
+      .expect(500)
   })
 })

@@ -18,7 +18,6 @@ export class UpdateClientController implements Controller {
 
       return ok(updatedClients)
     } catch (error) {
-      console.log(error)
       return serverError()
     }
   }
