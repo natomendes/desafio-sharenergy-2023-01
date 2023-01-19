@@ -1,7 +1,7 @@
 import { Collection } from 'mongodb'
 import request from 'supertest'
 import { DbLoadAccountByToken } from '../../../src/data/usecases/db-load-account-by-token'
-import { MongoHelper } from '../../../src/infra/db'
+import { ClientMongoRepository, MongoHelper } from '../../../src/infra/db'
 import app from '../../../src/main/config/app'
 import { accountMock } from '../../mocks'
 
@@ -35,6 +35,15 @@ describe('Client Routes', () => {
         .get('/clients')
         .set('x-access-token', 'any_token')
         .expect(200)
+    })
+
+    it('Should return 500 on server error', async () => {
+      jest.spyOn(ClientMongoRepository.prototype, 'loadAll')
+        .mockRejectedValueOnce(new Error())
+      await request(app)
+        .get('/clients')
+        .set('x-access-token', 'any_token')
+        .expect(500)
     })
   })
 })
