@@ -187,6 +187,20 @@ describe('Client Routes', () => {
         .expect(403)
     })
 
+    it('Should return 400 if no id is provided', async () => {
+      await request(app)
+        .put('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          name: 'any_name',
+          email: 'any_email@mail.com',
+          phone: 'any_phone',
+          address: 'any_address',
+          cpf: 'any_cpf'
+        })
+        .expect(400)
+    })
+
     it('Should return 400 if no name is provided', async () => {
       await request(app)
         .put('/clients')
