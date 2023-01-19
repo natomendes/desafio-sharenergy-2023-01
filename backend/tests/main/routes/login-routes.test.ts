@@ -47,11 +47,20 @@ describe('Login Routes', () => {
       .expect(401)
   })
 
-  it('Should return 400 if username is provided', async () => {
+  it('Should return 400 if no username is provided', async () => {
     await request(app)
       .post('/login')
       .send({
         password: '123456'
+      })
+      .expect(400)
+  })
+
+  it('Should return 400 if no password is provided', async () => {
+    await request(app)
+      .post('/login')
+      .send({
+        username: 'any_username'
       })
       .expect(400)
   })
