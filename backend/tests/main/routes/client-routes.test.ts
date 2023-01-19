@@ -125,5 +125,27 @@ describe('Client Routes', () => {
         })
         .expect(400)
     })
+
+    it('Should return 403 if cpf is already in use', async () => {
+      await clientCollection.insertOne({
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        phone: 'any_phone',
+        address: 'any_address',
+        cpf: 'any_cpf'
+      })
+
+      await request(app)
+        .post('/clients')
+        .set('x-access-token', 'any_token')
+        .send({
+          name: 'any_name',
+          email: 'any_email@mail.com',
+          phone: 'any_phone',
+          address: 'any_address',
+          cpf: 'any_cpf'
+        })
+        .expect(403)
+    })
   })
 })
