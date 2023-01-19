@@ -36,4 +36,14 @@ describe('Login Routes', () => {
       })
       .expect(200)
   })
+
+  it('Should return 401 if on invalid credentials', async () => {
+    await request(app)
+      .post('/login')
+      .send({
+        username: 'any_username',
+        password: '123456'
+      })
+      .expect(401)
+  })
 })
