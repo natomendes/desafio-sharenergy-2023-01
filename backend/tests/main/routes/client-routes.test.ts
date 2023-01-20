@@ -34,9 +34,9 @@ describe('Client Routes', () => {
       await clientCollection.insertOne({
         name: 'any_name',
         email: 'any_email@mail.com',
-        phone: 'any_phone',
+        phone: '00000000000',
         address: 'any_address',
-        cpf: 'any_cpf'
+        cpf: '63797312024'
       })
       await request(app)
         .get('/clients')
@@ -67,9 +67,9 @@ describe('Client Routes', () => {
         .set('x-access-token', 'any_token')
         .send({
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -80,9 +80,9 @@ describe('Client Routes', () => {
         .set('x-access-token', 'any_token')
         .send({
           name: 'any_name',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -95,7 +95,7 @@ describe('Client Routes', () => {
           name: 'any_name',
           email: 'any_email@mail.com',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -107,8 +107,8 @@ describe('Client Routes', () => {
         .send({
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
-          cpf: 'any_cpf'
+          phone: '00000000000',
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -120,7 +120,7 @@ describe('Client Routes', () => {
         .send({
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address'
         })
         .expect(400)
@@ -130,9 +130,9 @@ describe('Client Routes', () => {
       await clientCollection.insertOne({
         name: 'any_name',
         email: 'any_email@mail.com',
-        phone: 'any_phone',
+        phone: '00000000000',
         address: 'any_address',
-        cpf: 'any_cpf'
+        cpf: '63797312024'
       })
 
       await request(app)
@@ -141,9 +141,9 @@ describe('Client Routes', () => {
         .send({
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(403)
     })
@@ -155,9 +155,9 @@ describe('Client Routes', () => {
         .send({
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(200)
     })
@@ -172,9 +172,9 @@ describe('Client Routes', () => {
         .send({
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(500)
     })
@@ -194,9 +194,9 @@ describe('Client Routes', () => {
         .send({
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -208,9 +208,9 @@ describe('Client Routes', () => {
         .send({
           id: 'any_id',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -222,9 +222,9 @@ describe('Client Routes', () => {
         .send({
           id: 'any_id',
           name: 'any_name',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -238,7 +238,7 @@ describe('Client Routes', () => {
           name: 'any_name',
           email: 'any_email@mail.com',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -251,8 +251,8 @@ describe('Client Routes', () => {
           id: 'any_id',
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
-          cpf: 'any_cpf'
+          phone: '00000000000',
+          cpf: '63797312024'
         })
         .expect(400)
     })
@@ -265,7 +265,7 @@ describe('Client Routes', () => {
           id: 'any_id',
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address'
         })
         .expect(400)
@@ -275,9 +275,9 @@ describe('Client Routes', () => {
       const { insertedId } = await clientCollection.insertOne({
         name: 'any_name',
         email: 'any_email@mail.com',
-        phone: 'any_phone',
+        phone: '00000000000',
         address: 'any_address',
-        cpf: 'any_cpf'
+        cpf: '63797312024'
       })
 
       await request(app)
@@ -287,9 +287,9 @@ describe('Client Routes', () => {
           id: insertedId.toHexString(),
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(200)
     })
@@ -302,12 +302,12 @@ describe('Client Routes', () => {
         .put('/clients')
         .set('x-access-token', 'any_token')
         .send({
-          id: 'any_id',
+          id: '63bf6e4d6037b81ac2054320',
           name: 'any_name',
           email: 'any_email@mail.com',
-          phone: 'any_phone',
+          phone: '00000000000',
           address: 'any_address',
-          cpf: 'any_cpf'
+          cpf: '63797312024'
         })
         .expect(500)
     })
@@ -337,9 +337,9 @@ describe('Client Routes', () => {
       const { insertedId } = await clientCollection.insertOne({
         name: 'any_name',
         email: 'any_email@mail.com',
-        phone: 'any_phone',
+        phone: '00000000000',
         address: 'any_address',
-        cpf: 'any_cpf'
+        cpf: '63797312024'
       })
 
       await request(app)
