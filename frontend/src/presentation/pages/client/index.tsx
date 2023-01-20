@@ -79,8 +79,7 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
         lg:p-3 lg:max-w-5xl
         mx-auto w-full
       `}>
-        {
-          clients.length !== 0 && (
+
           <div className="rounded-xl space-y-1 bg-primary/40 p-1 w-full shadow">
             <div className="relative">
               <h2 className={`
@@ -97,34 +96,36 @@ export const Client: React.FC<Props> = ({ addClient, updateClient, deleteClient,
                   <AddIcon className="w-8 text-white group-hover:text-blue-800"/>
                 </button>
               </div>
-            </div>
-            <table className='w-full table-auto border-separate text-white'>
-              <thead>
-                <tr className="bg-white/[0.12]">
-                  <th className='rounded-l-lg leading-7'>Nome</th>
-                  <th>Cpf</th>
-                  <th className='hidden md:table-cell'>Email</th>
-                  <th className='hidden lg:table-cell'>Endereço</th>
-                  <th className='hidden lg:table-cell'>Telefone</th>
-                  <th className='rounded-r-lg'></th>
-                </tr>
-              </thead>
-              <tbody className='text-sm'>
-                {
-                  clients.map((client) => (
-                    <ClientItem
-                      {...client}
-                      key={client.id}
-                      deleteClient={deleteClient}
-                      setClients={setClients}
-                      handleEdition={setFormData}
-                    />
-                  ))
-                }
-              </tbody>
-            </table>
+            </div>        
+            {
+            clients.length !== 0 && (
+              <table className='w-full table-auto border-separate text-white'>
+                <thead>
+                  <tr className="bg-white/[0.12]">
+                    <th className='rounded-l-lg leading-7'>Nome</th>
+                    <th>Cpf</th>
+                    <th className='hidden md:table-cell'>Email</th>
+                    <th className='hidden lg:table-cell'>Endereço</th>
+                    <th className='hidden lg:table-cell'>Telefone</th>
+                    <th className='rounded-r-lg'></th>
+                  </tr>
+                </thead>
+                <tbody className='text-sm'>
+                  {
+                    clients.map((client) => (
+                      <ClientItem
+                        {...client}
+                        key={client.id}
+                        deleteClient={deleteClient}
+                        setClients={setClients}
+                        handleEdition={setFormData}
+                      />
+                    ))
+                  }
+                </tbody>
+              </table>
+            )}
           </div>
-          )}
 
         <FormContext.Provider value={{ state, setState, errorState, setErrorState, isOpen, setIsOpen, isLoading }}>
           <ClientModal handleChange={handleChange} handleSubmit={handleSubmit}/>

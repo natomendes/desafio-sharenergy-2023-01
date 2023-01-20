@@ -67,7 +67,7 @@ export const Login: React.FC<Props> = ({ authentication, validation }: Props) =>
     <div className='h-screen bg-gradient-to-tr from-primary to-green-600/60 flex flex-col justify-between'>
       <Header />
       <div className='px-4 flex h-full items-center justify-center relative'>
-        <FormContext.Provider value={{ state, setState, errorState }}>
+        <FormContext.Provider value={{ state, setState, errorState, isLoading }}>
           <form
             onSubmit={handleSubmit}
             className='p-8 bg-lightGray flex flex-col gap-6 rounded-lg shadow text-center'
@@ -78,7 +78,7 @@ export const Login: React.FC<Props> = ({ authentication, validation }: Props) =>
 
             <TextInput placeholder='Senha' type="password" name="password" className="auto-complete-gray" onChange={handleChange}/>
 
-            <SubmitButton text="Entrar" />
+            <SubmitButton text={"Entrar"} />
           </form>
           <div className='absolute top-0 right-0 left-0'>
             <Transition
