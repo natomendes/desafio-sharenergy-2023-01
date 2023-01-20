@@ -70,7 +70,7 @@ export const Login: React.FC<Props> = ({ authentication, validation }: Props) =>
         <FormContext.Provider value={{ state, setState, errorState }}>
           <form
             onSubmit={handleSubmit}
-            className='p-8 bg-lightGray flex flex-col gap-6 rounded shadow text-center'
+            className='p-8 bg-lightGray flex flex-col gap-6 rounded-lg shadow text-center'
           >
             <h2 className="text-primary font-bold text-lg">Login</h2>
 
