@@ -2,7 +2,7 @@
 
 O Projeto consiste uma aplicação web (frontend e backend) capaz de realizar a comunicação com APIs distintas, além de um CRUD.
 
-[Video de apresentação do projeto](https://www.youtube.com/watch?v=oWHrHqw0nuY)
+[Video de apresentação do projeto](https://vimeo.com/791047865)
 
 ## Aplicação
 
