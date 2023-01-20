@@ -1,5 +1,5 @@
 import { Validation } from '../../../presentation/protocols'
-import { CpfValidation, EmailValidation, RequiredFieldValidation, ValidationComposite } from '../../../validations'
+import { CpfValidation, EmailValidation, PhoneValidation, RequiredFieldValidation, ValidationComposite } from '../../../validations'
 
 export const makeAddClientValidation = (): Validation => {
   const validations: Validation[] = []
@@ -8,5 +8,6 @@ export const makeAddClientValidation = (): Validation => {
   }
   validations.push(new CpfValidation('cpf'))
   validations.push(new EmailValidation('email'))
+  validations.push(new PhoneValidation('phone'))
   return new ValidationComposite(validations)
 }
