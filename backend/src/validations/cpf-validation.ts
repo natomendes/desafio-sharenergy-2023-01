@@ -8,7 +8,7 @@ export class CpfValidation implements Validation {
   validate (input: object): Error {
     const isValid = this.isValid(input[this.field])
 
-    return (!input[this.field] || isValid) ? null : new InvalidFieldError(input[this.field])
+    return (!input[this.field] || isValid) ? null : new InvalidFieldError(this.field)
   }
 
   private isValid (cpf: string): boolean {
