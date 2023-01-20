@@ -17,7 +17,11 @@ export const User: React.FC<Props> = ({ loadUsers }: Props) => {
 
   const filterUsers = (users: UserModel[]): UserModel[] => {
     if (searchParam) {
-      const result = users.filter(({ name }: UserModel) => name.toLowerCase().startsWith(searchParam.toLowerCase()))
+      const result = users.filter(({ name, email, username }: UserModel) => (
+        name.toLowerCase().startsWith(searchParam.toLowerCase()) ||
+        email.toLowerCase().startsWith(searchParam.toLowerCase()) ||
+        username.toLowerCase().startsWith(searchParam.toLowerCase())
+      ))
 
       return result.length ? result : users
     }

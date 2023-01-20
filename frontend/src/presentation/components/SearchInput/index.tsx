@@ -39,7 +39,7 @@ export const SearchInput: React.FC<Props> = ({ searchParam, setSearchParam }: Pr
         ref={inputRef}
         type="text"
         name="search"
-        placeholder="Busca Nome"
+        placeholder="Busca rapida"
         autoComplete="off"
         onChange={e => { setSearchParam(e.target.value) }}
         value={searchParam}
